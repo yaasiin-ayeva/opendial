@@ -19,8 +19,14 @@
         "https://www.surfmusic.de/radio-station/sport-fm-91-9,22812.html",
         "https://tuningaradio.com/en/stations/togo/lome/"
       ],
-      "verified": "unverified",
-      "note": "Frequency read only in the station's name on two directories (15 Nov 2026). Address from one directory page (surfmusic.de); the station's own site could not be opened. Format assumed from the name."
+      "verified": "played",
+      "note": "Frequency read only in the station's name on two directories (15 Nov 2026). Address from one directory page (surfmusic.de); the station's own site could not be opened. Format assumed from the name.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "zephyr-fm",
@@ -38,7 +44,13 @@
         "http://zephyr.tg/"
       ],
       "verified": "unverified",
-      "note": "Address from one directory page (surfmusic.de) on 15 Nov 2026; it goes through a hosting proxy and may be old: two other directories (streema, tuningaradio) mark the station's stream as offline. The station's own site shows no stream address and no frequency. Another page (bamwor.com) gives 93.0 MHz."
+      "note": "Address from one directory page (surfmusic.de) on 15 Nov 2026; it goes through a hosting proxy and may be old: two other directories (streema, tuningaradio) mark the station's stream as offline. The station's own site shows no stream address and no frequency. Another page (bamwor.com) gives 93.0 MHz.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "failed",
+        "detail": "the address did not load"
+      }
     },
     {
       "id": "taxi-fm",
@@ -72,7 +84,13 @@
         "https://kanalfm.com/"
       ],
       "verified": "unverified",
-      "note": "Address read on the station's own site on 15 Nov 2026, as the 'flux' parameter of its player link. The site does not state the frequency: it comes from one directory (streema)."
+      "note": "Address read on the station's own site on 15 Nov 2026, as the 'flux' parameter of its player link. The site does not state the frequency: it comes from one directory (streema).",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "failed",
+        "detail": "the server answered HTTP 404"
+      }
     },
     {
       "id": "light-radio",
@@ -89,8 +107,14 @@
         "https://radio.dubbeh.net/stations/light-radio-togo-93-9fm-504982",
         "https://streema.com/radios/Lome"
       ],
-      "verified": "unverified",
-      "note": "Address and frequency read on the station's own site and on one directory on 15 Nov 2026; both agree."
+      "verified": "played",
+      "note": "Address and frequency read on the station's own site and on one directory on 15 Nov 2026; both agree.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "nana-fm",
@@ -107,8 +131,14 @@
         "https://radio.dubbeh.net/stations/nana-fm-togo-920473",
         "https://streema.com/radios/Nana_FM"
       ],
-      "verified": "unverified",
-      "note": "Frequency from the station's own site. Address from one directory page only (15 Nov 2026), kept exactly as shown, with its query string (a player parameter, not a listener id); the host is a rented server name and may change. The station's own pages show no address. Many programmes have Ewe titles: the main language was not confirmed. Another page (bamwor.com) gives 102.5 MHz."
+      "verified": "played",
+      "note": "Frequency from the station's own site. Address from one directory page only (15 Nov 2026), kept exactly as shown, with its query string (a player parameter, not a listener id); the host is a rented server name and may change. The station's own pages show no address. Many programmes have Ewe titles: the main language was not confirmed. Another page (bamwor.com) gives 102.5 MHz.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "victoire-fm",

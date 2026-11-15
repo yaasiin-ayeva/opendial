@@ -18,8 +18,14 @@
         "https://www.surfmusic.de/country/benin.html",
         "https://www.surfmusic.de/radio-station/radio-sogema-87-5-fm,26704.html"
       ],
-      "verified": "unverified",
-      "note": "Everything rests on one directory (surfmusic.de) on 15 Nov 2026: the frequency is read only in the station's name there, and the homepage it gives looks unrelated to the station. Not confirmed that it still broadcasts on FM. Language not researched."
+      "verified": "played",
+      "note": "Everything rests on one directory (surfmusic.de) on 15 Nov 2026: the frequency is read only in the station's name there, and the homepage it gives looks unrelated to the station. Not confirmed that it still broadcasts on FM. Language not researched.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "ocean-fm",
@@ -53,8 +59,14 @@
         "https://radio.dubbeh.net/stations/kifffm-982252",
         "https://srtb.bj/radiokifffmsrtb/"
       ],
-      "verified": "unverified",
-      "note": "Public station (SRTB, formerly ORTB). Doubtful identity: directories give 92.2 MHz for 'Atlantic FM', and one directory lists 'Atlantic FM ORTB' and 'KiffFM' with the same address and the same SRTB page, which is titled Kiff FM and does not mention Atlantic FM. That Kiff FM replaced Atlantic FM on 92.2 was not read on any page, and the SRTB page states no frequency. Address from one directory (15 Nov 2026)."
+      "verified": "played",
+      "note": "Public station (SRTB, formerly ORTB). Doubtful identity: directories give 92.2 MHz for 'Atlantic FM', and one directory lists 'Atlantic FM ORTB' and 'KiffFM' with the same address and the same SRTB page, which is titled Kiff FM and does not mention Atlantic FM. That Kiff FM replaced Atlantic FM on 92.2 was not read on any page, and the SRTB page states no frequency. Address from one directory (15 Nov 2026).",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "radio-benin",
@@ -75,8 +87,14 @@
         "https://radio.dubbeh.net/stations/radio-benin-982254",
         "https://streema.com/radios/ORTB"
       ],
-      "verified": "unverified",
-      "note": "National public radio (SRTB, formerly ORTB). Frequency from the broadcaster's own page ('Cotonou : 94.7 MHz'); one directory (streema) gives 98.2 instead. Both addresses come from one directory (15 Nov 2026): the first is listed at 192 kbps, the backup at 128 kbps. The broadcaster's page shows no audio address, only a webcast page (https://webcast.streamakaci.com/ortb/1/)."
+      "verified": "played",
+      "note": "National public radio (SRTB, formerly ORTB). Frequency from the broadcaster's own page ('Cotonou : 94.7 MHz'); one directory (streema) gives 98.2 instead. Both addresses come from one directory (15 Nov 2026): the first is listed at 192 kbps, the backup at 128 kbps. The broadcaster's page shows no audio address, only a webcast page (https://webcast.streamakaci.com/ortb/1/).",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "frissons-radio",
@@ -92,8 +110,14 @@
         "https://streema.com/radios/Frissons_Radio",
         "https://radio.dubbeh.net/stations/frissons-radio-952-982251"
       ],
-      "verified": "unverified",
-      "note": "Address from one directory page on 15 Nov 2026; the station's own site shows only a player, no address and no frequency. Frequency from three directories."
+      "verified": "played",
+      "note": "Address from one directory page on 15 Nov 2026; the station's own site shows only a player, no address and no frequency. Frequency from three directories.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "radio-planete",
@@ -160,8 +184,14 @@
         "https://ric.fiafrique.net/radio.html",
         "https://radio.dubbeh.net/stations/radio-immaculee-concepcion-987-982256"
       ],
-      "verified": "unverified",
-      "note": "Address read on the station's own player page on 15 Nov 2026, as the link under the station's name; it goes through a hosting proxy and was not confirmed to be the audio itself. One directory names another host (de1.streamingpulse.com) behind a signed proxy link. Frequency 101.0 for Cotonou from one directory (streema); another directory names the station '98.7', probably another transmitter of the network: confirm."
+      "verified": "played",
+      "note": "Address read on the station's own player page on 15 Nov 2026, as the link under the station's name; it goes through a hosting proxy and was not confirmed to be the audio itself. One directory names another host (de1.streamingpulse.com) behind a signed proxy link. Frequency 101.0 for Cotonou from one directory (streema); another directory names the station '98.7', probably another transmitter of the network: confirm.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "radio-maranatha",
@@ -195,8 +225,14 @@
         "https://radio.dubbeh.net/stations/radio-tokpa-1024226",
         "https://www.surfmusic.de/radio-station/radio-tokpa-104-3-fm,16625.html"
       ],
-      "verified": "unverified",
-      "note": "Doubtful address: two directories give https://radiotokpa.info/liveradio as the stream (one reports MP3 at 64 kbps), but it sits on the station's own website and may be a page rather than audio; the address could not be opened on 15 Nov 2026. Frequency from the station's own site. The station also broadcasts in Fon."
+      "verified": "played",
+      "note": "Doubtful address: two directories give https://radiotokpa.info/liveradio as the stream (one reports MP3 at 64 kbps), but it sits on the station's own website and may be a page rather than audio; the address could not be opened on 15 Nov 2026. Frequency from the station's own site. The station also broadcasts in Fon.",
+      "last_test": {
+        "date": "2026-11-15",
+        "where": "Chrome, listening test on GitHub Pages",
+        "result": "played",
+        "cors": true
+      }
     },
     {
       "id": "radio-benin-alafia",

@@ -72,7 +72,7 @@ The refresh never merges itself: an address from a community directory can be wr
 
 **Accra (18 stations).** On 15 November 2026 the listening test played 14 of them in Chrome on the published site; 13 of those also allow Web Audio. Class FM, GBC Uniiq FM, Okay FM and Oman FM did not load and need a working address. Addresses came from listening directories, not from the stations, and nobody has yet listened to confirm that each stream is the station it claims to be. No station has been asked for its agreement yet.
 
-**Lomé (13 stations) and Cotonou (14 stations).** Added on 15 November 2026 from station sites and listening directories. Five stations in Lomé and six in Cotonou have a stream address; the others have a frequency only, mostly because their only public address carries an expiring token. None has been played yet.
+**Lomé (13 stations) and Cotonou (14 stations).** Added on 15 November 2026 from station sites and listening directories. Five stations in Lomé and six in Cotonou have a stream address; the others have a frequency only, mostly because their only public address carries an expiring token. In the listening test the same day, all six played in Cotonou and three of five in Lomé (Zéphyr FM and Kanal FM did not load).
 
 ## Contributing
 
