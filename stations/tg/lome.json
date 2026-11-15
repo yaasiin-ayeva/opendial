@@ -1,0 +1,235 @@
+{
+  "country": "TG",
+  "country_name": "Togo",
+  "city": "Lomé",
+  "about": "Source list of the FM stations of Lomé, Togo. Edited by hand. 'stream' is the station's own internet stream; it is left empty when no direct address was found (scripts/discover.py suggests candidates from Radio Browser). 'backup_streams' are other addresses of the same station. 'permission' is asked, granted, refused or not-asked: see AGREEMENTS.md. A null frequency is still to confirm. 'sources' are the pages where the frequency and the stream address were read. 'verified' is unverified, heard (someone heard it play in a browser with tools/listen.html) or checked (scripts/check.py found it live): every address here was copied from web pages on 15 November 2026 and none has been played or checked yet. 'note' says what is doubtful.",
+  "stations": [
+    {
+      "id": "sport-fm",
+      "name": "Sport FM",
+      "frequency_mhz": 91.9,
+      "language": "fr",
+      "format": "sport",
+      "homepage": "https://sportfmtg.com/",
+      "stream": "https://listen.radioking.com/radio/512377/stream/570244",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://www.surfmusic.de/country/togo.html",
+        "https://www.surfmusic.de/radio-station/sport-fm-91-9,22812.html",
+        "https://tuningaradio.com/en/stations/togo/lome/"
+      ],
+      "verified": "unverified",
+      "note": "Frequency read only in the station's name on two directories (15 Nov 2026). Address from one directory page (surfmusic.de); the station's own site could not be opened. Format assumed from the name."
+    },
+    {
+      "id": "zephyr-fm",
+      "name": "Zéphyr FM",
+      "frequency_mhz": 92.3,
+      "language": "fr",
+      "format": "news, talk, music",
+      "homepage": "https://zephyr.tg/",
+      "stream": "https://usa18.fastcast4u.com/proxy/zephyr?mp=/1",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Zephyr_FM_Zephyr_92.3_FM",
+        "https://www.surfmusic.de/radio-station/zephyr-fm,39.html",
+        "http://zephyr.tg/"
+      ],
+      "verified": "unverified",
+      "note": "Address from one directory page (surfmusic.de) on 15 Nov 2026; it goes through a hosting proxy and may be old: two other directories (streema, tuningaradio) mark the station's stream as offline. The station's own site shows no stream address and no frequency. Another page (bamwor.com) gives 93.0 MHz."
+    },
+    {
+      "id": "taxi-fm",
+      "name": "Taxi FM",
+      "frequency_mhz": 93.1,
+      "language": "fr",
+      "format": "news, talk, entertainment",
+      "homepage": "https://www.facebook.com/radiotaxifmtg/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Taxi_FM",
+        "https://radio.dubbeh.net/stations/taxi-fm-22287"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026: one directory only gives a signed, expiring proxy link, and lists an unrelated radionomy address as the homepage. No website found, only a Facebook page. Frequency from one directory (streema)."
+    },
+    {
+      "id": "kanal-fm",
+      "name": "Kanal FM",
+      "frequency_mhz": 93.5,
+      "language": "fr",
+      "format": "news, talk",
+      "homepage": "https://kanalfm.com/",
+      "stream": "https://radio.kanalfm.com/KANALFM",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Kanal_FM",
+        "https://kanalfm.com/"
+      ],
+      "verified": "unverified",
+      "note": "Address read on the station's own site on 15 Nov 2026, as the 'flux' parameter of its player link. The site does not state the frequency: it comes from one directory (streema)."
+    },
+    {
+      "id": "light-radio",
+      "name": "Light Radio",
+      "frequency_mhz": 93.9,
+      "language": "fr",
+      "format": "christian, gospel",
+      "homepage": "https://lightradiotogo.com/",
+      "stream": "https://a9.asurahosting.com/listen/light_radio_93.9fm/radio.mp3",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://lightradiotogo.com/",
+        "https://radio.dubbeh.net/stations/light-radio-togo-93-9fm-504982",
+        "https://streema.com/radios/Lome"
+      ],
+      "verified": "unverified",
+      "note": "Address and frequency read on the station's own site and on one directory on 15 Nov 2026; both agree."
+    },
+    {
+      "id": "nana-fm",
+      "name": "Nana FM",
+      "frequency_mhz": 95.5,
+      "language": "fr",
+      "format": "talk, news, music",
+      "homepage": "https://nanafm.tg/",
+      "stream": "https://srv1269271.hstgr.cloud/;?type=http&nocache=16",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://nanafm.tg/",
+        "https://radio.dubbeh.net/stations/nana-fm-togo-920473",
+        "https://streema.com/radios/Nana_FM"
+      ],
+      "verified": "unverified",
+      "note": "Frequency from the station's own site. Address from one directory page only (15 Nov 2026), kept exactly as shown, with its query string (a player parameter, not a listener id); the host is a rented server name and may change. The station's own pages show no address. Many programmes have Ewe titles: the main language was not confirmed. Another page (bamwor.com) gives 102.5 MHz."
+    },
+    {
+      "id": "victoire-fm",
+      "name": "Victoire FM",
+      "frequency_mhz": 96.3,
+      "language": "fr",
+      "format": "news, talk",
+      "homepage": "https://victoirefm.com/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://victoirefm.com/",
+        "https://zeno.fm/radio/victoire-fm/",
+        "https://radio.dubbeh.net/stations/radio-victoire-96-3-lome-20221"
+      ],
+      "verified": "unverified",
+      "note": "No usable direct address found on 15 Nov 2026. The station streams through Zeno (player page https://zeno.fm/player/victoire-fm); the only audio address shown by a directory carries a signed token that expires after about a minute, so it is not recorded. Frequency from the station's own site. Zeno lists French and Ewe."
+    },
+    {
+      "id": "radio-maria-togo",
+      "name": "Radio Maria Togo",
+      "frequency_mhz": 98.0,
+      "language": "fr",
+      "format": "catholic, religious",
+      "homepage": "http://www.radiomaria.tg/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Maria_Togo",
+        "https://radio.dubbeh.net/stations/radio-maria-togo-10712"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026: one directory only gives a signed, expiring proxy link (stream host dreamsiteradiocp.com, 64 kbps AAC). The station's own site could not be opened. Frequency from one directory (streema)."
+    },
+    {
+      "id": "radio-lome",
+      "name": "Radio Lomé",
+      "frequency_mhz": 99.5,
+      "language": "fr",
+      "format": "public, news, talk",
+      "homepage": "http://www.radiolome.tg/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Lome",
+        "https://onlineradiobox.com/tg/lom/",
+        "https://tuningaradio.com/en/stations/togo/lome/radio-lome-fm-99-5/",
+        "http://www.radiolome.tg/"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026. The public station's own site only links a Zeno player page (https://www.zeno.fm/player/radiolome). Frequency from three directories (streema, onlineradiobox, tuningaradio); the station's site does not state it, and another page (bamwor.com) gives 97.5 MHz."
+    },
+    {
+      "id": "radio-carre-jeunes",
+      "name": "Radio Carré Jeunes (RCJ)",
+      "frequency_mhz": 103.1,
+      "language": "fr",
+      "format": "",
+      "homepage": "https://www.rcjfm.tg/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://tuningaradio.com/en/stations/togo/lome/rcj-103-1-fm-radio-carre-jeunes/"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026. Frequency, city and homepage rest on one directory page (tuningaradio); the station's own site could not be opened. Format not researched."
+    },
+    {
+      "id": "hit-radio-togo",
+      "name": "Hit Radio Togo",
+      "frequency_mhz": 104.7,
+      "language": "fr",
+      "format": "hits, pop",
+      "homepage": "https://www.hitradio.ma",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Hit_Radio_13",
+        "https://tuningaradio.com/en/stations/togo/lome/"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026. Local station of the Moroccan Hit Radio network; the homepage is the network's site. Frequency from one directory (streema)."
+    },
+    {
+      "id": "pyramide-fm",
+      "name": "Pyramide FM",
+      "frequency_mhz": 105.5,
+      "language": "fr",
+      "format": "variety",
+      "homepage": "http://www.radiopyramide.fm",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Pyramide_FM",
+        "https://tuningaradio.com/en/stations/togo/lome/pyramide-fm-105-5/",
+        "https://zeno.fm/radio/emcradio/"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026. The station streams through Zeno (page https://zeno.fm/radio/emcradio/, 'PYRAMIDE FM LOME'), which shows no audio address. The homepage comes from one directory and could not be opened. Frequency from two directories."
+    },
+    {
+      "id": "radio-gloire-a-dieu",
+      "name": "Radio Gloire à Dieu",
+      "frequency_mhz": 106.7,
+      "language": "fr",
+      "format": "christian",
+      "homepage": "https://www.facebook.com/gloireadieu.george/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Gloire_a_Dieu"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026; the one directory that lists the station marks its stream as unavailable. No website found, only a Facebook page. Frequency from that one directory (streema)."
+    }
+  ]
+}
