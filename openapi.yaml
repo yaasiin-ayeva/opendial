@@ -41,16 +41,18 @@ info:
 
     ## State of the data
 
-    Accra is the only city so far: 18 stations. Their stream addresses were copied from listening
-    directories on 15 November 2026 and are marked `unverified` in the source list until someone has
-    heard them. The published catalogue only ever contains streams that passed the automatic check.
+    Accra is the first city: 18 stations. On 15 November 2026 the listening test played 14 of them in
+    Chrome; 13 of those also allow Web Audio (`cors`). Class FM, GBC Uniiq FM, Okay FM and Oman FM did
+    not load and still need a working address. Nobody has yet listened to confirm that each stream is
+    the station it claims to be. The published catalogue only ever contains streams that passed the
+    automatic check.
 
     ## Adding a city
 
-    Create `stations/{country}/{city}.json` on the model of `stations/gh/accra.json`, fill it, and
-    open a pull request. `{country}` is the lower-case ISO 3166 two-letter code, `{city}` a
+    Create `stations/{country}/{city}.json` on the model of `stations/gh/accra.json`, add it to
+    `stations/index.json`, and open a pull request. `{country}` is the lower-case ISO 3166 two-letter code, `{city}` a
     lower-case name with hyphens. The scheduled check picks the new list up by itself. Details are in
-    the [README](https://github.com/yaasiin-ayeva/opendial#readme).
+    [CONTRIBUTING.md](https://github.com/yaasiin-ayeva/opendial/blob/main/CONTRIBUTING.md).
 
     ## Rights
 
@@ -127,6 +129,23 @@ paths:
                         bitrate_kbps: 128
         "404":
           description: No such city, or its first check has not run yet
+  /stations/index.json:
+    get:
+      tags: [Source lists]
+      operationId: listSourceLists
+      summary: List the hand-edited lists
+      description: One entry per city that has a list, whether or not it is published yet.
+      responses:
+        "200":
+          description: The lists
+          content:
+            application/json:
+              example:
+                lists:
+                  - path: gh/accra.json
+                    country: GH
+                    country_name: Ghana
+                    city: Accra
   /stations/{country}/{city}.json:
     get:
       tags: [Source lists]
@@ -238,5 +257,6 @@ components:
               backup_streams: { type: array, items: { type: string } }
               permission: { type: string, enum: [not-asked, asked, granted, refused] }
               sources: { type: array, items: { type: string }, description: Pages where the values were read }
-              verified: { type: string, enum: [unverified, heard, checked] }
+              verified: { type: string, enum: [unverified, played, heard, checked], description: "unverified: never played. played: a browser played it. heard: a person confirmed the station. checked: passes the scheduled check" }
+              last_test: { type: object, description: The latest listening test of the main stream }
               note: { type: string }

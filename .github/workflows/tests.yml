@@ -2,6 +2,9 @@ name: tests
 
 on:
   pull_request:
+  push:
+    branches: [main]
+    paths-ignore: ['public/**', 'log/**']
   workflow_dispatch:
 
 permissions:
@@ -15,7 +18,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: The station list is valid JSON
-        run: python3 -c "import glob, json; [json.load(open(f, encoding='utf-8')) for f in glob.glob('stations/*/*.json')]"
-      - name: Test the checker against a local server
+      - name: Test the checker and the lists
         run: python3 -m unittest discover -s tests -v

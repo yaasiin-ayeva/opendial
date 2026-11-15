@@ -3,73 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>opendial: listen to the streams</title>
+<title>opendial: listening test</title>
 <!--
-  Test page for the station catalogue. One file, no build step. Open it locally or from GitHub Pages.
-  Only a real browser can prove that a stream plays; this page plays each stream as the game would
+  Listening test for the station catalogue. One file, no build step; shown inside the documentation
+  (index.html) and usable on its own, from GitHub Pages or from disk.
+  Only a real browser can prove that a stream plays: this page plays each stream as an app would
   (a plain audio element, no Web Audio) and notes what happened. It records and stores no audio.
-  hls.js is loaded from a CDN only when a stream is an HLS playlist and the browser cannot play HLS itself.
+  hls.js is loaded from a CDN only when a stream is an HLS playlist the browser cannot play itself.
+  The look follows the documentation viewer (Scalar): same type, spacing, borders and colours,
+  light and dark from the system setting.
 -->
 <style>
-  body { font: 15px/1.45 system-ui, sans-serif; margin: 1.5rem; color: #1b1b1b; background: #fafafa; }
-  h1 { font-size: 1.3rem; margin: 0 0 .3rem; }
-  p { margin: .4rem 0; max-width: 62rem; }
-  fieldset { border: 1px solid #ccc; margin: 1rem 0; padding: .6rem .8rem; max-width: 62rem; }
-  input[type=url] { width: 26rem; max-width: 100%; }
-  button { font: inherit; padding: .2rem .7rem; cursor: pointer; }
-  table { border-collapse: collapse; margin-top: 1rem; width: 100%; }
-  th, td { border: 1px solid #ccc; padding: .3rem .5rem; text-align: left; vertical-align: top; }
-  th { background: #eee; position: sticky; top: 0; }
-  td.url { word-break: break-all; font-family: ui-monospace, monospace; font-size: 12px; max-width: 24rem; }
-  .ok { color: #116611; font-weight: 600; }
-  .bad { color: #aa1111; font-weight: 600; }
-  .warn { color: #8a5a00; font-weight: 600; }
-  .dim { color: #666; }
-  tr.current { background: #fff6cc; }
-  #status { font-weight: 600; min-height: 1.4em; }
+  :root {
+    color-scheme: light dark;
+    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --bg-1: #ffffff; --bg-2: #f6f6f6; --bg-3: #e7e7e7;
+    --text-1: #1b1b1b; --text-2: #666666; --text-3: #8e8e8e;
+    --border: rgba(0, 0, 0, .1);
+    --accent: #0082d0; --green: #069061; --red: #dc1b19; --orange: #b4670a;
+    --row-current: rgba(0, 130, 208, .08);
+    --radius: 6px; --radius-lg: 9px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-1: #0f0f0f; --bg-2: #1a1a1a; --bg-3: #272727;
+      --text-1: #e7e7e7; --text-2: #a4a4a4; --text-3: #797979;
+      --border: rgba(255, 255, 255, .1);
+      --accent: #4eb3ec; --green: #00b648; --red: #ff6b6b; --orange: #ffab66;
+      --row-current: rgba(78, 179, 236, .1);
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.55 var(--font); color: var(--text-1); background: var(--bg-1);
+         -webkit-font-smoothing: antialiased; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 40px 32px 64px; }
+  h1 { font-size: 26px; line-height: 1.25; font-weight: 600; margin: 0 0 8px; letter-spacing: -.01em; }
+  h2 { font-size: 13px; font-weight: 600; margin: 0; color: var(--text-1); }
+  p { margin: 0 0 10px; max-width: 760px; }
+  .lead { font-size: 15px; color: var(--text-2); }
+  .dim { color: var(--text-3); }
+  code { font: 12px var(--mono); background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-1); margin: 24px 0 0; overflow: hidden; }
+  .card > header { display: flex; align-items: center; gap: 12px; padding: 9px 14px; background: var(--bg-2); border-bottom: 1px solid var(--border); }
+  .card > .body { padding: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .card details { padding: 0 14px 12px; color: var(--text-2); }
+  .card details summary { cursor: pointer; font-size: 13px; padding: 2px 0; }
+  .card details .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+
+  label { font-size: 13px; color: var(--text-2); }
+  select, input[type=url] { font: 13px var(--font); color: var(--text-1); background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 7px 10px; min-width: 0; }
+  select { min-width: 280px; }
+  input[type=url] { flex: 1 1 320px; font-family: var(--mono); font-size: 12px; }
+  input[type=file] { font: 12px var(--font); color: var(--text-2); }
+  select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  button { font: 500 13px var(--font); color: var(--text-1); background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 7px 12px; cursor: pointer; white-space: nowrap; }
+  button:hover:not(:disabled) { background: var(--bg-3); }
+  button:disabled { color: var(--text-3); cursor: default; }
+  button.primary { background: var(--text-1); color: var(--bg-1); border-color: var(--text-1); }
+  button.primary:hover:not(:disabled) { opacity: .88; background: var(--text-1); }
+  button.primary:disabled { opacity: .35; }
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 12px; }
+  #status { color: var(--text-2); font-size: 13px; min-height: 1.4em; }
+
+  .tablewrap { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { padding: 9px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+  tbody tr:last-child td { border-bottom: 0; }
+  th { position: sticky; top: 0; z-index: 1; background: var(--bg-2); color: var(--text-2); font-weight: 500; font-size: 12px; white-space: nowrap; }
+  td:first-child { font-family: var(--mono); font-size: 12px; white-space: nowrap; color: var(--text-2); }
+  td:nth-child(2) { font-weight: 500; }
+  td.url { font: 12px/1.5 var(--mono); color: var(--text-2); word-break: break-all; max-width: 320px; }
+  td button { padding: 4px 12px; font-size: 12px; min-width: 52px; }
+  tr.current { background: var(--row-current); }
+  .ok, .bad, .warn { font-weight: 500; }
+  .ok { color: var(--green); } .bad { color: var(--red); } .warn { color: var(--orange); }
+  td.ok::before, td.bad::before, td.warn::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: currentColor; margin-right: 7px; vertical-align: 1px; }
+
+  .notes { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .notes div { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; color: var(--text-2); font-size: 13px; }
+  .notes b { display: block; color: var(--text-1); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 640px) { .page { padding: 24px 16px 48px; } select { min-width: 0; width: 100%; } }
 </style>
 </head>
 <body>
-<h1>opendial: listen to the streams</h1>
-<p>Plays each stream of the catalogue in this browser, one at a time, the way the game will: a plain audio
-element, straight from the station's server. Nothing plays before you click. No audio is recorded or stored.</p>
-<p class="dim">This page's origin: <code id="origin"></code>. <span id="originNote"></span></p>
+<div class="page">
+  <h1>Listening test</h1>
+  <p class="lead">Plays each stream of a city in this browser, one at a time, the way an app will: a plain audio
+  element, straight from the station's server. Nothing plays before you click, and no audio is recorded or stored.</p>
+  <p class="dim">This page's origin: <code id="origin"></code> <span id="originNote"></span></p>
 
-<fieldset>
-  <legend>Catalogue</legend>
-  <p>
-    <label>Address: <input type="url" id="catUrl" value="../public/gh/accra.json"></label>
-    <button id="loadUrl">Load</button>
-    <button id="loadSource" title="stations/gh/accra.json, the hand-edited list">Load ../stations/gh/accra.json</button>
-  </p>
-  <p><label>or a file from disk (stations/gh/accra.json or public/gh/accra.json): <input type="file" id="catFile" accept=".json,application/json"></label></p>
-  <p class="dim">Opened from disk (file://), most browsers refuse to fetch a neighbouring file: use the file picker.</p>
-</fieldset>
+  <section class="card">
+    <header><h2>List to test</h2></header>
+    <div class="body">
+      <label for="cat">City</label>
+      <select id="cat" aria-label="List to test"></select>
+      <button id="reload" type="button">Reload</button>
+    </div>
+    <details>
+      <summary>Another address or a file</summary>
+      <div class="row">
+        <input type="url" id="catUrl" aria-label="Address of a list" placeholder="https://…/stations.json">
+        <button id="loadUrl" type="button">Load address</button>
+      </div>
+      <div class="row">
+        <label for="catFile">File from disk</label>
+        <input type="file" id="catFile" accept=".json,application/json">
+      </div>
+      <p class="dim" style="margin-top:10px">Opened from disk (file://), most browsers refuse to fetch a neighbouring file: use the file picker.</p>
+    </details>
+  </section>
 
-<p>
-  <button id="testAll" disabled>Test all (8 s each)</button>
-  <button id="stopAll" disabled>Stop</button>
-  <button id="export" disabled>Export results</button>
-  <span id="status" role="status"></span>
-</p>
+  <div class="toolbar">
+    <button id="testAll" class="primary" type="button" disabled>Test all (8 s each)</button>
+    <button id="stopAll" type="button" disabled>Stop</button>
+    <button id="export" type="button" disabled>Export results</button>
+    <span id="status" role="status"></span>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>MHz</th><th>Station</th><th>Stream</th><th>Scheme</th><th></th>
-      <th>Playback</th><th>Time to first sound</th><th>CORS fetch</th>
-    </tr>
-  </thead>
-  <tbody id="rows"><tr><td colspan="8" class="dim">No catalogue loaded yet.</td></tr></tbody>
-</table>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>MHz</th><th>Station</th><th>Stream</th><th>Scheme</th><th></th>
+          <th>Playback</th><th>First sound</th><th>CORS</th>
+        </tr>
+      </thead>
+      <tbody id="rows"><tr><td colspan="8" class="dim">No list loaded yet.</td></tr></tbody>
+    </table>
+  </div>
 
-<p class="dim">Reading the columns. <b>Scheme</b>: a page served over HTTPS (the game) cannot play an HTTP stream.
-<b>Playback</b>: "playing" means the audio element fired its <code>playing</code> event; still listen, a stream can play silence
-or an advert loop. <b>CORS fetch</b>: a separate <code>fetch()</code> in <code>cors</code> mode, stopped as soon as the headers arrive;
-"allowed" means the server sent an Access-Control-Allow-Origin that accepts this page's origin (needed only for the car-radio
-sound filter, not for plain playback). "refused" also covers a server that did not answer the fetch at all. A page cannot read
-the header's value itself, only whether the browser accepted it. "Test all" starts each stream without a new click; a browser
-that blocks this reports NotAllowedError: click Play on one stream first, or allow sound for this page.</p>
+  <div class="notes">
+    <div><b>Scheme</b>A page served over HTTPS cannot play an HTTP stream: browsers block it.</div>
+    <div><b>Playback</b>"played" means the audio element fired its <code>playing</code> event. Still listen:
+      a stream can play silence or an advert loop.</div>
+    <div><b>CORS</b>A separate <code>fetch()</code>, stopped as soon as the headers arrive. "allowed" means the
+      server accepts this page's origin, which is needed only to route audio through Web Audio (filters, visualisers),
+      not for plain playback. "refused" also covers a server that did not answer.</div>
+    <div><b>Test all</b>Starts each stream without a new click. A browser that blocks this reports
+      NotAllowedError: press Play on one stream first, or allow sound for this page.</div>
+  </div>
+</div>
 
 <script>
 'use strict';
@@ -144,9 +225,9 @@ function loadFromUrl(url) {
     return r.json();
   }).then(function (data) {
     readCatalogue(data, url);
-    remember('opendial-catalogue', url);
+    remember('opendial-list', url);
   }).catch(function (e) {
-    setStatus('Could not load ' + url + ' (' + e.message + '). Use the file picker.');
+    setStatus('Could not load ' + url + ' (' + e.message + '). Try another address or a file.');
   });
 }
 
@@ -388,16 +469,37 @@ function exportResults() {
 
 $('origin').textContent = location.origin;
 $('originNote').textContent = PAGE_IS_HTTPS
-  ? 'Served over HTTPS, like the game: HTTP streams will be blocked here too.'
-  : 'Not served over HTTPS: an HTTP stream may play here and still be blocked in the game. From file:// the origin is "null", so the CORS test passes only for servers that allow every origin.';
-var saved = recall('opendial-catalogue');
-if (saved) $('catUrl').value = saved;
+  ? 'Served over HTTPS, like a real app: HTTP streams are blocked here too.'
+  : 'Not served over HTTPS: an HTTP stream may play here and still be blocked in an app. From file:// the origin is "null", so the CORS test passes only for servers that allow every origin.';
 
-$('loadUrl').addEventListener('click', function () { loadFromUrl($('catUrl').value.trim()); });
-$('loadSource').addEventListener('click', function () {
-  $('catUrl').value = '../stations/gh/accra.json';
-  loadFromUrl('../stations/gh/accra.json');
-});
+// The city menu: every hand-edited list (stations/index.json), then every published catalogue
+// (public/index.json, present once the scheduled check has run).
+function option(group, path, label) {
+  var o = document.createElement('option');
+  o.value = path; o.textContent = label;
+  group.appendChild(o);
+}
+function fillMenu() {
+  var menu = $('cat');
+  function group(label) { var g = document.createElement('optgroup'); g.label = label; menu.appendChild(g); return g; }
+  function get(url) { return fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  return Promise.all([get('../stations/index.json'), get('../public/index.json')]).then(function (both) {
+    var lists = (both[0] && both[0].lists) || [], cities = (both[1] && both[1].cities) || [];
+    if (lists.length) {
+      var g1 = group('Every station (hand-edited list)');
+      lists.forEach(function (l) { option(g1, '../stations/' + l.path, l.city + ', ' + l.country_name); });
+    }
+    if (cities.length) {
+      var g2 = group('Passed the last check (published)');
+      cities.forEach(function (c) { option(g2, '../public/' + c.path, c.city + ', ' + (c.country_name || c.country) + ' (' + c.published + ' of ' + c.listed + ')'); });
+    }
+    if (!menu.options.length) { option(menu, '', 'No list found: use another address or a file'); menu.disabled = true; }
+  });
+}
+
+$('cat').addEventListener('change', function () { if (this.value) loadFromUrl(this.value); });
+$('reload').addEventListener('click', function () { if ($('cat').value) loadFromUrl($('cat').value); });
+$('loadUrl').addEventListener('click', function () { var u = $('catUrl').value.trim(); if (u) loadFromUrl(u); });
 $('catFile').addEventListener('change', function () {
   var f = this.files[0];
   if (!f) return;
@@ -412,8 +514,12 @@ $('testAll').addEventListener('click', testAll);
 $('stopAll').addEventListener('click', function () { running = false; stopCurrent(); });
 $('export').addEventListener('click', exportResults);
 
-// Loading the catalogue is not playing: it is safe to do before any click.
-loadFromUrl($('catUrl').value.trim());
+// Loading a list is not playing: it is safe to do before any click.
+fillMenu().then(function () {
+  var menu = $('cat'), saved = recall('opendial-list');
+  if (saved && Array.prototype.some.call(menu.options, function (o) { return o.value === saved; })) menu.value = saved;
+  if (menu.value) loadFromUrl(menu.value);
+});
 </script>
 </body>
 </html>

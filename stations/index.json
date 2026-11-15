@@ -1,0 +1,11 @@
+{
+  "about": "The hand-edited lists, one per city. Keep in step with the files of this folder: tests/test_lists.py checks it.",
+  "lists": [
+    {
+      "path": "gh/accra.json",
+      "country": "GH",
+      "country_name": "Ghana",
+      "city": "Accra"
+    }
+  ]
+}
