@@ -80,6 +80,13 @@ Adding a city or fixing an address: see [CONTRIBUTING.md](CONTRIBUTING.md). Rule
 
 ## Rights
 
-The stations belong to their broadcasters. opendial lists public stream addresses and gives no right to use a station's name or audio; [docs/agreements.md](docs/agreements.md) records what each station has answered. The repository has no licence file yet: until one is added, the code and the lists are not licensed for reuse.
+The stations belong to their broadcasters. opendial lists public stream addresses and gives no right to use a station's name or audio; [docs/agreements.md](docs/agreements.md) records what each station has answered.
+
+The repository carries two licences:
+
+- **Code** (scripts, tests, pages, workflows): MIT, see [LICENSE](LICENSE).
+- **Data** (`stations/`, `public/`, `log/`): CC0 1.0, see [LICENSE-DATA](LICENSE-DATA). The lists are facts anyone may reuse, with or without credit.
+
+Neither licence covers the stations themselves: their audio, names and logos stay with the broadcasters.
 
 opendial was started for the game CHALE: Accra Nights, whose car radio plays the real Accra stations. Nothing in it is specific to the game.

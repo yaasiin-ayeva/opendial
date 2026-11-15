@@ -32,3 +32,7 @@
 ## Code
 
 Python standard library only, no build step for the pages. When the published JSON changes shape, change `openapi.yaml` in the same commit. Commit messages: an imperative subject under 72 characters, then why.
+
+## Licence of contributions
+
+By opening a pull request you agree that your code is released under the MIT licence ([LICENSE](LICENSE)) and your station data under CC0 1.0 ([LICENSE-DATA](LICENSE-DATA)). Only add data you read on a public page.
