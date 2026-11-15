@@ -24,7 +24,8 @@ import urllib.request
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 AUDIO = ('audio/', 'application/ogg', 'application/vnd.apple.mpegurl', 'application/x-mpegurl')
-HLS = ('application/vnd.apple.mpegurl', 'application/x-mpegurl')
+# Playlist types: some servers label an HLS playlist audio/mpegurl or audio/x-mpegurl.
+HLS = ('application/vnd.apple.mpegurl', 'application/x-mpegurl', 'audio/mpegurl', 'audio/x-mpegurl')
 UA = 'circle-radio-check/1 (+https://github.com/yaasiin-ayeva/circle-radio)'
 
 
@@ -32,8 +33,12 @@ def probe(url, origin, timeout=12):
     """Open one stream and describe it. Never raises."""
     out = {'url': url, 'live': False, 'https': url.startswith('https://'), 'cors': False,
            'content_type': '', 'hls': False, 'bitrate_kbps': None, 'error': ''}
-    req = urllib.request.Request(url, headers={'User-Agent': UA, 'Origin': origin, 'Icy-MetaData': '0'})
+    if not url.startswith(('http://', 'https://')):
+        out['error'] = 'not an http(s) address'
+        return out
     try:
+        # Inside the try: a malformed address must not stop the whole run.
+        req = urllib.request.Request(url, headers={'User-Agent': UA, 'Origin': origin, 'Icy-MetaData': '0'})
         with urllib.request.urlopen(req, timeout=timeout, context=ssl.create_default_context()) as r:
             ctype = (r.headers.get('Content-Type') or '').split(';')[0].strip().lower()
             out['content_type'] = ctype
