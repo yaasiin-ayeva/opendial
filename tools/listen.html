@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>circle-radio: listen to the streams</title>
+<title>opendial: listen to the streams</title>
 <!--
   Test page for the station catalogue. One file, no build step. Open it locally or from GitHub Pages.
   Only a real browser can prove that a stream plays; this page plays each stream as the game would
@@ -30,7 +30,7 @@
 </style>
 </head>
 <body>
-<h1>circle-radio: listen to the streams</h1>
+<h1>opendial: listen to the streams</h1>
 <p>Plays each stream of the catalogue in this browser, one at a time, the way the game will: a plain audio
 element, straight from the station's server. Nothing plays before you click. No audio is recorded or stored.</p>
 <p class="dim">This page's origin: <code id="origin"></code>. <span id="originNote"></span></p>
@@ -38,11 +38,11 @@ element, straight from the station's server. Nothing plays before you click. No 
 <fieldset>
   <legend>Catalogue</legend>
   <p>
-    <label>Address: <input type="url" id="catUrl" value="../public/stations.json"></label>
+    <label>Address: <input type="url" id="catUrl" value="../public/gh/accra.json"></label>
     <button id="loadUrl">Load</button>
-    <button id="loadSource" title="stations/accra.json, the hand-edited list">Load ../stations/accra.json</button>
+    <button id="loadSource" title="stations/gh/accra.json, the hand-edited list">Load ../stations/gh/accra.json</button>
   </p>
-  <p><label>or a file from disk (stations/accra.json or public/stations.json): <input type="file" id="catFile" accept=".json,application/json"></label></p>
+  <p><label>or a file from disk (stations/gh/accra.json or public/gh/accra.json): <input type="file" id="catFile" accept=".json,application/json"></label></p>
   <p class="dim">Opened from disk (file://), most browsers refuse to fetch a neighbouring file: use the file picker.</p>
 </fieldset>
 
@@ -144,7 +144,7 @@ function loadFromUrl(url) {
     return r.json();
   }).then(function (data) {
     readCatalogue(data, url);
-    remember('circle-radio-catalogue', url);
+    remember('opendial-catalogue', url);
   }).catch(function (e) {
     setStatus('Could not load ' + url + ' (' + e.message + '). Use the file picker.');
   });
@@ -360,7 +360,7 @@ function endRun(done, total) {
 
 function exportResults() {
   var out = {
-    tool: 'circle-radio tools/listen.html',
+    tool: 'opendial tools/listen.html',
     exported_at: new Date().toISOString(),
     catalogue: catalogueName,
     page_origin: location.origin,
@@ -390,13 +390,13 @@ $('origin').textContent = location.origin;
 $('originNote').textContent = PAGE_IS_HTTPS
   ? 'Served over HTTPS, like the game: HTTP streams will be blocked here too.'
   : 'Not served over HTTPS: an HTTP stream may play here and still be blocked in the game. From file:// the origin is "null", so the CORS test passes only for servers that allow every origin.';
-var saved = recall('circle-radio-catalogue');
+var saved = recall('opendial-catalogue');
 if (saved) $('catUrl').value = saved;
 
 $('loadUrl').addEventListener('click', function () { loadFromUrl($('catUrl').value.trim()); });
 $('loadSource').addEventListener('click', function () {
-  $('catUrl').value = '../stations/accra.json';
-  loadFromUrl('../stations/accra.json');
+  $('catUrl').value = '../stations/gh/accra.json';
+  loadFromUrl('../stations/gh/accra.json');
 });
 $('catFile').addEventListener('change', function () {
   var f = this.files[0];

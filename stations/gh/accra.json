@@ -1,0 +1,340 @@
+{
+  "country": "GH",
+  "country_name": "Ghana",
+  "city": "Accra",
+  "about": "Source list of the FM stations of Accra, Ghana. Edited by hand. 'stream' is the station's own internet stream; leave it empty until it is found (scripts/discover.py suggests candidates from Radio Browser). 'backup_streams' are other addresses of the same station. 'permission' is asked, granted, refused or not-asked: see AGREEMENTS.md. A null frequency is still to confirm. 'sources' are the pages where the frequency and the stream address were read. 'verified' is unverified, heard (someone heard it play in a browser with tools/listen.html) or checked (scripts/check.py found it live): every address here was copied from web pages on 15 November 2026 and none has been played or checked yet. 'note' says what is doubtful.",
+  "stations": [
+    {
+      "id": "joy-fm",
+      "name": "Joy FM",
+      "frequency_mhz": 99.7,
+      "language": "en",
+      "format": "news, talk, music",
+      "homepage": "https://www.myjoyonline.com",
+      "stream": "https://mmg.streamguys1.com/JoyFM-mp3",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://radio.ghana-net.com/joy-fm-ghana",
+        "https://radio.dubbeh.net/stations/joy-fm-773154",
+        "https://www.myjoyonline.com/live"
+      ],
+      "verified": "unverified",
+      "note": "Address from two directories on 15 Nov 2026 (one lists it bare, two list it with a player key in a query string). The station's own page only embeds a player (amp.atunwadigital.com), no direct address."
+    },
+    {
+      "id": "peace-fm",
+      "name": "Peace FM",
+      "frequency_mhz": 104.3,
+      "language": "tw",
+      "format": "news, talk",
+      "homepage": "https://www.peacefmonline.com",
+      "stream": "https://peacefm-atunwadigital.streamguys1.com/peacefm",
+      "backup_streams": [
+        "http://peacefm.atunwadigital.streamguys1.com/peacefm"
+      ],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://radio.ghana-net.com/peace-fm-104-3-fm",
+        "https://radio.dubbeh.net/stations/peace-fm-783296",
+        "https://www.peacefmonline.com/services/streaming"
+      ],
+      "verified": "unverified",
+      "note": "HTTPS address from two directories on 15 Nov 2026. The backup is the HTTP address noted earlier from the station group's site; a browser game on HTTPS cannot play it."
+    },
+    {
+      "id": "okay-fm",
+      "name": "Okay FM",
+      "frequency_mhz": 101.7,
+      "language": "tw",
+      "format": "entertainment, music",
+      "homepage": "https://www.peacefmonline.com",
+      "stream": "https://okayfm.atunwadigital.streamguys1.com/okayfm",
+      "backup_streams": [
+        "http://okayfm.atunwadigital.streamguys1.com/okayfm"
+      ],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@okay-101-7-fm",
+        "https://www.peacefmonline.com/services/"
+      ],
+      "verified": "unverified",
+      "note": "HTTPS form listed by one directory on 15 Nov 2026; the host name has two levels under streamguys1.com, so its certificate may not match: test it. The backup is the same address in HTTP, noted earlier, not playable from an HTTPS page. The directory gives https://www.okayfmonline.com/ as the homepage."
+    },
+    {
+      "id": "citi-fm",
+      "name": "Citi FM",
+      "frequency_mhz": 97.3,
+      "language": "en",
+      "format": "news, talk",
+      "homepage": "https://citinewsroom.com",
+      "stream": "https://citi973fm.radioca.st/stream",
+      "backup_streams": [
+        "https://citi973fm.radioca.st/;"
+      ],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://radio.ghana-net.com/citi-fm-97-3-fm",
+        "https://www.radiotune.fm/en-us/@97-3-citi-fm",
+        "https://radio.dubbeh.net/stations/citi-fm-784"
+      ],
+      "verified": "unverified",
+      "note": "Three directories give three spellings on the same host on 15 Nov 2026; the third (radio.dubbeh.net) is https://citi973fm.radioca.st/index.html:80/;stream.mp3 and looks malformed, so it is not listed."
+    },
+    {
+      "id": "asempa-fm",
+      "name": "Asempa FM",
+      "frequency_mhz": 94.7,
+      "language": "tw",
+      "format": "current affairs, sport",
+      "homepage": "https://www.myjoyonline.com/media/asempa-fm-live",
+      "stream": "https://mmg.streamguys1.com/AsempaFM-mp3",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@asempa-fm",
+        "https://www.myjoyonline.com/live"
+      ],
+      "verified": "unverified",
+      "note": "Found on 15 Nov 2026 only in a directory, followed by a query string carrying a player key and a listener id (see sources). The query string is left out here: it is not ours to republish. Whether the address answers without it is untested; ask the station group for a clean address."
+    },
+    {
+      "id": "radio-gold",
+      "name": "Radio Gold",
+      "frequency_mhz": 90.5,
+      "language": "en",
+      "format": "talk",
+      "homepage": "https://radiogoldlive.com",
+      "stream": "https://radiogold-atunwadigital.streamguys1.com/radiogold",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://radio.ghana-net.com/radio-gold-ghana",
+        "https://www.radiotune.fm/en-us/@radio-gold-90-5"
+      ],
+      "verified": "unverified",
+      "note": "Address from two directories on 15 Nov 2026."
+    },
+    {
+      "id": "accra-fm",
+      "name": "Accra FM",
+      "frequency_mhz": 100.5,
+      "language": "tw",
+      "format": "talk, sport",
+      "homepage": "",
+      "stream": "https://accrafm-atunwadigital.streamguys1.com/accrafm",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://radio.ghana-net.com/accra-fm-accra-100-5"
+      ],
+      "verified": "unverified",
+      "note": "Address from one directory on 15 Nov 2026. Homepage not found."
+    },
+    {
+      "id": "oman-fm",
+      "name": "Oman FM",
+      "frequency_mhz": 107.1,
+      "language": "tw",
+      "format": "talk, music",
+      "homepage": "https://omanfm1071.com",
+      "stream": "https://omanfm.atunwadigital.streamguys1.com/omanfm",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@oman-fm-107-1"
+      ],
+      "verified": "unverified",
+      "note": "Address and homepage from one directory on 15 Nov 2026; the host name has two levels under streamguys1.com, so its certificate may not match: test it."
+    },
+    {
+      "id": "adom-fm",
+      "name": "Adom FM",
+      "frequency_mhz": 106.3,
+      "language": "tw",
+      "format": "talk, music",
+      "homepage": "https://www.adomonline.com",
+      "stream": "https://mmg.streamguys1.com/AdomFM-mp3",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@adom-fm",
+        "https://radio.dubbeh.net/stations/adom-fm-819348",
+        "https://radio.ghana-net.com/adom-fm-ghana",
+        "https://www.myjoyonline.com/live"
+      ],
+      "verified": "unverified",
+      "note": "Address from three directories on 15 Nov 2026 (one lists it bare, two list it with a player key in a query string, one of those in HTTP)."
+    },
+    {
+      "id": "hitz-fm",
+      "name": "Hitz FM",
+      "frequency_mhz": 103.9,
+      "language": "en",
+      "format": "music",
+      "homepage": "https://www.myjoyonline.com/media/hitz-fm-live",
+      "stream": "https://mmg.streamguys1.com/HitzFM-mp3",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@hitz-fm-gh",
+        "https://www.myjoyonline.com/live"
+      ],
+      "verified": "unverified",
+      "note": "Found on 15 Nov 2026 only in a directory, followed by a query string carrying a player key and a listener id (see sources). The query string is left out here: it is not ours to republish. Whether the address answers without it is untested; ask the station group for a clean address."
+    },
+    {
+      "id": "starr-fm",
+      "name": "Starr FM",
+      "frequency_mhz": 103.5,
+      "language": "en",
+      "format": "news, talk, music",
+      "homepage": "https://starrfm.com.gh",
+      "stream": "https://starrfm-atunwadigital.streamguys1.com/starrfm",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@starr-fm",
+        "https://radio.ghana-net.com/starr-fm-ghana-103-5-fm/"
+      ],
+      "verified": "unverified",
+      "note": "Address from two directories on 15 Nov 2026."
+    },
+    {
+      "id": "yfm",
+      "name": "YFM",
+      "frequency_mhz": 107.9,
+      "language": "en",
+      "format": "youth, music",
+      "homepage": "https://www.yfmghana.com",
+      "stream": "https://atunwadigital.streamguys1.com/yfm1079accra",
+      "backup_streams": [
+        "https://yfm1079accra-atunwadigital.streamguys1.com/yfm1079accra"
+      ],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://radio.dubbeh.net/stations/yfm-accra-870994",
+        "https://www.radiotune.fm/en-us/@y-107-9-fm"
+      ],
+      "verified": "unverified",
+      "note": "Two directories give two different hosts on 15 Nov 2026; both are listed."
+    },
+    {
+      "id": "asaase-radio",
+      "name": "Asaase Radio",
+      "frequency_mhz": 99.5,
+      "language": "en",
+      "format": "news, talk",
+      "homepage": "https://asaaseradio.com",
+      "stream": "https://stream.radiojar.com/cyg76xcvp0hvv",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@asaase-radio-accra",
+        "https://radio.ghana-net.com/asaase-radio-accra-99-5-fm-greater-accra"
+      ],
+      "verified": "unverified",
+      "note": "Address from two directories on 15 Nov 2026."
+    },
+    {
+      "id": "gbc-uniiq-fm",
+      "name": "GBC Uniiq FM",
+      "frequency_mhz": 95.7,
+      "language": "en",
+      "format": "public radio",
+      "homepage": "https://www.gbcghanaonline.com",
+      "stream": "https://173.249.50.205:8004/;",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://en.wikipedia.org/wiki/Uniiq_FM",
+        "https://www.radiotune.fm/en-us/@gbc-uniiq-fm-95-7",
+        "https://radio.ghana-net.com/gbc-uniiq-fm-accra-95-7-fm"
+      ],
+      "verified": "unverified",
+      "note": "Weak: one directory lists this bare IP address in HTTPS on 15 Nov 2026; another lists the same address in HTTP behind a third-party relay (cast.tunzilla.com), which this catalogue must not use. HTTPS on a bare IP address is unlikely to have a valid certificate. Ask GBC for an address."
+    },
+    {
+      "id": "3fm",
+      "name": "3FM",
+      "frequency_mhz": 92.7,
+      "language": "en",
+      "format": "news, talk, music",
+      "homepage": "https://3news.com/3fm",
+      "stream": "https://3fm-atunwadigital.streamguys1.com/3fm",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@3-fm"
+      ],
+      "verified": "unverified",
+      "note": "Added on 15 Nov 2026. Address from one directory."
+    },
+    {
+      "id": "class-fm",
+      "name": "Class FM",
+      "frequency_mhz": 91.3,
+      "language": "en",
+      "format": "news, talk, music",
+      "homepage": "https://www.classfmonline.com",
+      "stream": "https://classfm-atunwadigital.streamguys1.com/classfm",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@class-91-3-fm"
+      ],
+      "verified": "unverified",
+      "note": "Added on 15 Nov 2026. Address from one directory. Format not researched: confirm."
+    },
+    {
+      "id": "onua-fm",
+      "name": "Onua FM",
+      "frequency_mhz": 95.1,
+      "language": "tw",
+      "format": "talk, music",
+      "homepage": "https://3news.com",
+      "stream": "https://onuafm-atunwadigital.streamguys1.com/onuafm",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@onua-95-1-fm"
+      ],
+      "verified": "unverified",
+      "note": "Added on 15 Nov 2026. Address from one directory. Language and format not researched: confirm."
+    },
+    {
+      "id": "angel-fm",
+      "name": "Angel FM",
+      "frequency_mhz": 102.9,
+      "language": "tw",
+      "format": "talk, music",
+      "homepage": "https://angelonline.com.gh",
+      "stream": "https://angelfmaccra-atunwadigital.streamguys1.com/angelfmaccra",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
+        "https://www.radiotune.fm/en-us/@angel-fm-accra"
+      ],
+      "verified": "unverified",
+      "note": "Added on 15 Nov 2026. Address from one directory. Language and format not researched: confirm."
+    }
+  ]
+}

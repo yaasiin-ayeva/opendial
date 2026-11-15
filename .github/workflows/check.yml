@@ -17,11 +17,11 @@ jobs:
         with:
           python-version: "3.12"
       - name: Check every stream
-        run: python3 scripts/check.py --origin "${{ vars.GAME_ORIGIN || 'https://chale.example' }}"
+        run: python3 scripts/check.py --origin "${{ vars.APP_ORIGIN || 'https://app.example' }}"
       - name: Commit the catalogue and the log
         run: |
-          git config user.name "circle-radio checker"
+          git config user.name "opendial checker"
           git config user.email "checker@users.noreply.github.com"
-          git add public/stations.json log/
+          git add public/ log/
           git diff --cached --quiet || git commit -m "Update the station catalogue" -m "Scheduled stream check."
           git push

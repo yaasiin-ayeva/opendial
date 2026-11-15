@@ -16,6 +16,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: The station list is valid JSON
-        run: python3 -c "import json; json.load(open('stations/accra.json', encoding='utf-8'))"
+        run: python3 -c "import glob, json; [json.load(open(f, encoding='utf-8')) for f in glob.glob('stations/*/*.json')]"
       - name: Test the checker against a local server
         run: python3 -m unittest discover -s tests -v
