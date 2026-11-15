@@ -1,0 +1,13 @@
+{
+  "cities": [
+    {
+      "country": "GH",
+      "country_name": "Ghana",
+      "city": "Accra",
+      "path": "gh/accra.json",
+      "checked_at": "2026-11-15T13:09:09+00:00",
+      "listed": 18,
+      "published": 13
+    }
+  ]
+}
