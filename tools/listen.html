@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>circle-radio: listen to the streams</title>
+<!--
+  Test page for the station catalogue. One file, no build step. Open it locally or from GitHub Pages.
+  Only a real browser can prove that a stream plays; this page plays each stream as the game would
+  (a plain audio element, no Web Audio) and notes what happened. It records and stores no audio.
+  hls.js is loaded from a CDN only when a stream is an HLS playlist and the browser cannot play HLS itself.
+-->
+<style>
+  body { font: 15px/1.45 system-ui, sans-serif; margin: 1.5rem; color: #1b1b1b; background: #fafafa; }
+  h1 { font-size: 1.3rem; margin: 0 0 .3rem; }
+  p { margin: .4rem 0; max-width: 62rem; }
+  fieldset { border: 1px solid #ccc; margin: 1rem 0; padding: .6rem .8rem; max-width: 62rem; }
+  input[type=url] { width: 26rem; max-width: 100%; }
+  button { font: inherit; padding: .2rem .7rem; cursor: pointer; }
+  table { border-collapse: collapse; margin-top: 1rem; width: 100%; }
+  th, td { border: 1px solid #ccc; padding: .3rem .5rem; text-align: left; vertical-align: top; }
+  th { background: #eee; position: sticky; top: 0; }
+  td.url { word-break: break-all; font-family: ui-monospace, monospace; font-size: 12px; max-width: 24rem; }
+  .ok { color: #116611; font-weight: 600; }
+  .bad { color: #aa1111; font-weight: 600; }
+  .warn { color: #8a5a00; font-weight: 600; }
+  .dim { color: #666; }
+  tr.current { background: #fff6cc; }
+  #status { font-weight: 600; min-height: 1.4em; }
+</style>
+</head>
+<body>
+<h1>circle-radio: listen to the streams</h1>
+<p>Plays each stream of the catalogue in this browser, one at a time, the way the game will: a plain audio
+element, straight from the station's server. Nothing plays before you click. No audio is recorded or stored.</p>
+<p class="dim">This page's origin: <code id="origin"></code>. <span id="originNote"></span></p>
+
+<fieldset>
+  <legend>Catalogue</legend>
+  <p>
+    <label>Address: <input type="url" id="catUrl" value="../public/stations.json"></label>
+    <button id="loadUrl">Load</button>
+    <button id="loadSource" title="stations/accra.json, the hand-edited list">Load ../stations/accra.json</button>
+  </p>
+  <p><label>or a file from disk (stations/accra.json or public/stations.json): <input type="file" id="catFile" accept=".json,application/json"></label></p>
+  <p class="dim">Opened from disk (file://), most browsers refuse to fetch a neighbouring file: use the file picker.</p>
+</fieldset>
+
+<p>
+  <button id="testAll" disabled>Test all (8 s each)</button>
+  <button id="stopAll" disabled>Stop</button>
+  <button id="export" disabled>Export results</button>
+  <span id="status" role="status"></span>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>MHz</th><th>Station</th><th>Stream</th><th>Scheme</th><th></th>
+      <th>Playback</th><th>Time to first sound</th><th>CORS fetch</th>
+    </tr>
+  </thead>
+  <tbody id="rows"><tr><td colspan="8" class="dim">No catalogue loaded yet.</td></tr></tbody>
+</table>
+
+<p class="dim">Reading the columns. <b>Scheme</b>: a page served over HTTPS (the game) cannot play an HTTP stream.
+<b>Playback</b>: "playing" means the audio element fired its <code>playing</code> event; still listen, a stream can play silence
+or an advert loop. <b>CORS fetch</b>: a separate <code>fetch()</code> in <code>cors</code> mode, stopped as soon as the headers arrive;
+"allowed" means the server sent an Access-Control-Allow-Origin that accepts this page's origin (needed only for the car-radio
+sound filter, not for plain playback). "refused" also covers a server that did not answer the fetch at all. A page cannot read
+the header's value itself, only whether the browser accepted it. "Test all" starts each stream without a new click; a browser
+that blocks this reports NotAllowedError: click Play on one stream first, or allow sound for this page.</p>
+
+<script>
+'use strict';
+
+var HLS_JS = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+var TEST_SECONDS = 8;
+var PAGE_IS_HTTPS = location.protocol === 'https:';
+
+var streams = [];        // one entry per stream: {station, id, mhz, url, role, hls, row cells, result}
+var catalogueName = '';
+var current = null;      // {entry, audio, hls, started, timer}
+var running = false;     // "Test all" in progress
+
+function $(id) { return document.getElementById(id); }
+function setStatus(text) { $('status').textContent = text; }
+
+function remember(key, value) {
+  try { localStorage.setItem(key, value); } catch (e) { /* private mode or file://: do without */ }
+}
+function recall(key) {
+  try { return localStorage.getItem(key); } catch (e) { return null; }
+}
+
+// ---- catalogue ----------------------------------------------------------------------------
+
+// Accepts both shapes: published entries have streams:[{url,hls,...}], source entries have
+// stream and backup_streams.
+function readCatalogue(data, name) {
+  if (!data || !Array.isArray(data.stations)) throw new Error('no "stations" list in this file');
+  var list = [];
+  data.stations.forEach(function (st) {
+    var found = [];
+    if (Array.isArray(st.streams)) {
+      st.streams.forEach(function (s, i) {
+        if (s && s.url) found.push({ url: String(s.url), hls: !!s.hls, role: i === 0 ? 'main' : 'backup ' + i });
+      });
+    } else {
+      if (st.stream) found.push({ url: String(st.stream), hls: false, role: 'main' });
+      (st.backup_streams || []).forEach(function (u, i) {
+        if (u) found.push({ url: String(u), hls: false, role: 'backup ' + (i + 1) });
+      });
+    }
+    if (!found.length) found.push({ url: '', hls: false, role: 'none' });
+    found.forEach(function (f) {
+      list.push({
+        id: String(st.id || ''), station: String(st.name || st.id || '?'),
+        mhz: typeof st.frequency_mhz === 'number' ? st.frequency_mhz : null,
+        url: f.url, role: f.role,
+        hls: f.hls || /\.m3u8$/i.test(f.url.split('?')[0]),
+        result: null
+      });
+    });
+  });
+  list.sort(function (a, b) {
+    if ((a.mhz === null) !== (b.mhz === null)) return a.mhz === null ? 1 : -1;
+    return (a.mhz || 0) - (b.mhz || 0) || a.station.localeCompare(b.station);
+  });
+  stopCurrent();
+  streams = list;
+  catalogueName = name;
+  draw();
+  var playable = streams.filter(function (s) { return s.url; }).length;
+  setStatus(name + ': ' + data.stations.length + ' stations, ' + playable + ' stream addresses.');
+  $('testAll').disabled = !playable;
+  $('export').disabled = !streams.length;
+}
+
+function loadFromUrl(url) {
+  setStatus('Loading ' + url + ' …');
+  fetch(url, { cache: 'no-store' }).then(function (r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function (data) {
+    readCatalogue(data, url);
+    remember('circle-radio-catalogue', url);
+  }).catch(function (e) {
+    setStatus('Could not load ' + url + ' (' + e.message + '). Use the file picker.');
+  });
+}
+
+function cell(tr, text, cls) {
+  var td = document.createElement('td');
+  td.textContent = text;
+  if (cls) td.className = cls;
+  tr.appendChild(td);
+  return td;
+}
+
+function scheme(url) {
+  var m = /^(https?):\/\//i.exec(url);
+  return m ? m[1].toLowerCase() : '';
+}
+
+function draw() {
+  var body = $('rows');
+  body.textContent = '';
+  streams.forEach(function (s) {
+    var tr = document.createElement('tr');
+    cell(tr, s.mhz === null ? '?' : s.mhz.toFixed(1));
+    cell(tr, s.station + (s.role === 'main' || s.role === 'none' ? '' : ' (' + s.role + ')'));
+    cell(tr, s.url || 'no address yet', s.url ? 'url' : 'dim');
+    var sch = scheme(s.url);
+    if (!s.url) cell(tr, '');
+    else if (sch === 'https') cell(tr, 'https' + (s.hls ? ', HLS' : ''), 'ok');
+    else if (sch === 'http') cell(tr, 'http: blocked on an https page' + (s.hls ? ', HLS' : ''), 'warn');
+    else cell(tr, 'not http(s)', 'bad');
+    var td = document.createElement('td');
+    if (sch) {
+      s.button = document.createElement('button');
+      s.button.textContent = 'Play';
+      s.button.addEventListener('click', function () {
+        if (running) return;
+        if (current && current.entry === s) stopCurrent(); else play(s, 0);
+      });
+      td.appendChild(s.button);
+    }
+    tr.appendChild(td);
+    s.tr = tr;
+    s.cellPlay = cell(tr, '');
+    s.cellTime = cell(tr, '');
+    s.cellCors = cell(tr, '');
+    body.appendChild(tr);
+  });
+}
+
+// ---- playing ------------------------------------------------------------------------------
+
+function show(td, text, cls) { td.textContent = text; td.className = cls || ''; }
+
+var MEDIA_ERRORS = { 1: 'aborted', 2: 'network error', 3: 'cannot decode', 4: 'source not supported or not reachable' };
+
+function loadHlsJs() {
+  if (window.Hls) return Promise.resolve();
+  return new Promise(function (resolve, reject) {
+    var s = document.createElement('script');
+    s.src = HLS_JS;
+    s.onload = function () { resolve(); };
+    s.onerror = function () { reject(new Error('could not load hls.js from the CDN')); };
+    document.head.appendChild(s);
+  });
+}
+
+function stopCurrent() {
+  if (!current) return;
+  var c = current;
+  current = null;
+  clearTimeout(c.timer);
+  if (c.hlsPlayer) { try { c.hlsPlayer.destroy(); } catch (e) { /* already gone */ } }
+  c.audio.onplaying = c.audio.onerror = null;
+  c.audio.pause();
+  c.audio.removeAttribute('src');
+  c.audio.load();                      // drops the connection to the stream
+  c.entry.tr.classList.remove('current');
+  if (c.entry.button) c.entry.button.textContent = 'Play';
+  if (c.entry.result && c.entry.result.playback === 'waiting') {
+    c.entry.result.playback = 'stopped before any sound';
+    show(c.entry.cellPlay, 'stopped before any sound', 'dim');
+  } else if (c.entry.result && c.entry.result.playback === 'playing') {
+    show(c.entry.cellPlay, 'played, now stopped', 'ok');
+  }
+  if (c.done) c.done();
+}
+
+// Plays one stream. With seconds > 0 it stops by itself after that time (used by "Test all").
+// Returns a promise resolved when the stream is stopped.
+function play(entry, seconds) {
+  stopCurrent();                        // only one stream at a time
+  var audio = new Audio();              // no crossOrigin attribute: plain playback needs no CORS
+  audio.preload = 'none';
+  var started = performance.now();
+  var result = entry.result = {
+    station: entry.station, id: entry.id, frequency_mhz: entry.mhz, role: entry.role, url: entry.url,
+    scheme: scheme(entry.url), hls: entry.hls, mixed_content: PAGE_IS_HTTPS && scheme(entry.url) === 'http',
+    playback: 'waiting', error: '', seconds_to_first_sound: null, cors: 'not tested', tested_at: new Date().toISOString()
+  };
+  var finished;
+  var whenDone = new Promise(function (resolve) { finished = resolve; });
+  var c = current = { entry: entry, audio: audio, hlsPlayer: null, timer: null, done: finished };
+  entry.tr.classList.add('current');
+  if (entry.button) entry.button.textContent = 'Stop';
+  show(entry.cellPlay, 'waiting…', 'dim');
+  show(entry.cellTime, '');
+  testCors(entry, result);
+
+  function fail(message) {
+    if (current !== c || result.playback === 'playing') return;
+    result.playback = 'failed';
+    result.error = message;
+    show(entry.cellPlay, 'failed: ' + message, 'bad');
+    if (!seconds) stopCurrent();
+  }
+  audio.onplaying = function () {
+    if (current !== c || result.playback === 'playing') return;
+    result.playback = 'playing';
+    result.seconds_to_first_sound = Math.round(performance.now() - started) / 1000;
+    show(entry.cellPlay, 'playing', 'ok');
+    show(entry.cellTime, result.seconds_to_first_sound.toFixed(1) + ' s');
+  };
+  audio.onerror = function () {
+    var e = audio.error;
+    fail(e ? (MEDIA_ERRORS[e.code] || 'error ' + e.code) + (e.message ? ' (' + e.message + ')' : '') : 'unknown error');
+  };
+  function start() {
+    if (current !== c) return;
+    var p = audio.play();
+    if (p && p.catch) p.catch(function (e) { fail(e.name + (e.message ? ': ' + e.message : '')); });
+  }
+  if (entry.hls && !audio.canPlayType('application/vnd.apple.mpegurl')) {
+    loadHlsJs().then(function () {
+      if (current !== c) return;
+      if (!window.Hls.isSupported()) { fail('this browser cannot play HLS'); return; }
+      c.hlsPlayer = new window.Hls();
+      c.hlsPlayer.on(window.Hls.Events.ERROR, function (ev, data) {
+        if (data && data.fatal) fail('HLS ' + data.type + ': ' + data.details);
+      });
+      c.hlsPlayer.loadSource(entry.url);
+      c.hlsPlayer.attachMedia(audio);
+      start();
+    }).catch(function (e) { fail(e.message); });
+  } else {
+    audio.src = entry.url;
+    start();
+  }
+  if (seconds) {
+    c.timer = setTimeout(function () {
+      if (current !== c) return;
+      if (result.playback === 'waiting') {
+        result.playback = 'failed';
+        result.error = 'no sound after ' + seconds + ' s';
+        show(entry.cellPlay, 'failed: ' + result.error, 'bad');
+      }
+      stopCurrent();
+    }, seconds * 1000);
+  }
+  return whenDone;
+}
+
+// A fetch separate from playback: it only tells whether the server lets this page's origin read
+// the stream, which Web Audio treatment would need. The audio itself never goes through it.
+function testCors(entry, result) {
+  show(entry.cellCors, 'testing…', 'dim');
+  if (result.mixed_content) {
+    result.cors = 'not testable: http address on an https page';
+    show(entry.cellCors, result.cors, 'warn');
+    return;
+  }
+  var ctl = new AbortController();
+  var timer = setTimeout(function () { ctl.abort(); }, 10000);
+  fetch(entry.url, { mode: 'cors', credentials: 'omit', cache: 'no-store', signal: ctl.signal }).then(function (r) {
+    clearTimeout(timer);
+    ctl.abort();                        // headers are enough: read no audio
+    result.cors = 'allowed';
+    result.cors_http_status = r.status;
+    show(entry.cellCors, 'allowed for this origin (HTTP ' + r.status + ')', 'ok');
+  }).catch(function (e) {
+    clearTimeout(timer);
+    result.cors = e.name === 'AbortError' ? 'no answer in 10 s' : 'refused';
+    show(entry.cellCors, result.cors === 'refused' ? 'refused (no header for this origin, or no answer)' : result.cors, 'bad');
+  });
+}
+
+// ---- test all, export ---------------------------------------------------------------------
+
+function testAll() {
+  var list = streams.filter(function (s) { return scheme(s.url); });
+  running = true;
+  $('testAll').disabled = true;
+  $('stopAll').disabled = false;
+  var i = 0;
+  function next() {
+    if (!running || i >= list.length) { endRun(i, list.length); return; }
+    var s = list[i++];
+    setStatus('Testing ' + i + ' of ' + list.length + ': ' + s.station + ' …');
+    s.tr.scrollIntoView({ block: 'nearest' });
+    play(s, TEST_SECONDS).then(next);
+  }
+  next();
+}
+
+function endRun(done, total) {
+  var wasRunning = running;
+  running = false;
+  $('testAll').disabled = false;
+  $('stopAll').disabled = true;
+  var played = streams.filter(function (s) { return s.result && s.result.seconds_to_first_sound !== null; }).length;
+  setStatus((wasRunning ? 'Done: ' : 'Stopped: ') + done + ' of ' + total + ' streams tried, ' + played + ' played.');
+}
+
+function exportResults() {
+  var out = {
+    tool: 'circle-radio tools/listen.html',
+    exported_at: new Date().toISOString(),
+    catalogue: catalogueName,
+    page_origin: location.origin,
+    page_is_https: PAGE_IS_HTTPS,
+    browser: navigator.userAgent,
+    seconds_per_stream_in_test_all: TEST_SECONDS,
+    results: streams.map(function (s) {
+      return s.result || {
+        station: s.station, id: s.id, frequency_mhz: s.mhz, role: s.role, url: s.url, scheme: scheme(s.url),
+        hls: s.hls, playback: s.url ? 'not tested' : 'no address', error: '', seconds_to_first_sound: null, cors: 'not tested'
+      };
+    })
+  };
+  var blob = new Blob([JSON.stringify(out, null, 2) + '\n'], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'listen-results-' + out.exported_at.slice(0, 16).replace(/[:T]/g, '-') + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+}
+
+// ---- wiring -------------------------------------------------------------------------------
+
+$('origin').textContent = location.origin;
+$('originNote').textContent = PAGE_IS_HTTPS
+  ? 'Served over HTTPS, like the game: HTTP streams will be blocked here too.'
+  : 'Not served over HTTPS: an HTTP stream may play here and still be blocked in the game. From file:// the origin is "null", so the CORS test passes only for servers that allow every origin.';
+var saved = recall('circle-radio-catalogue');
+if (saved) $('catUrl').value = saved;
+
+$('loadUrl').addEventListener('click', function () { loadFromUrl($('catUrl').value.trim()); });
+$('loadSource').addEventListener('click', function () {
+  $('catUrl').value = '../stations/accra.json';
+  loadFromUrl('../stations/accra.json');
+});
+$('catFile').addEventListener('change', function () {
+  var f = this.files[0];
+  if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    try { readCatalogue(JSON.parse(reader.result), f.name); }
+    catch (e) { setStatus('Could not read ' + f.name + ': ' + e.message); }
+  };
+  reader.readAsText(f);
+});
+$('testAll').addEventListener('click', testAll);
+$('stopAll').addEventListener('click', function () { running = false; stopCurrent(); });
+$('export').addEventListener('click', exportResults);
+
+// Loading the catalogue is not playing: it is safe to do before any click.
+loadFromUrl($('catUrl').value.trim());
+</script>
+</body>
+</html>
