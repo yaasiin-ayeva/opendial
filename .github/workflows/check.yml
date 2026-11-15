@@ -1,0 +1,27 @@
+name: check streams
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 minutes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check every stream
+        run: python3 scripts/check.py --origin "${{ vars.GAME_ORIGIN || 'https://chale.example' }}"
+      - name: Commit the catalogue and the log
+        run: |
+          git config user.name "circle-radio checker"
+          git config user.email "checker@users.noreply.github.com"
+          git add public/stations.json log/
+          git diff --cached --quiet || git commit -m "Update the station catalogue" -m "Scheduled stream check."
+          git push

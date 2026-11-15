@@ -1,0 +1,19 @@
+{
+  "about": "Source list of Accra FM stations. Edited by hand. 'stream' is the station's own internet stream; leave it empty until it is found (scripts/discover.py suggests candidates from Radio Browser). 'permission' is asked, granted, refused or not-asked: see AGREEMENTS.md. A null frequency is still to confirm.",
+  "stations": [
+    {"id": "joy-fm", "name": "Joy FM", "frequency_mhz": 99.7, "language": "en", "format": "news, talk, music", "homepage": "https://www.myjoyonline.com", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "peace-fm", "name": "Peace FM", "frequency_mhz": 104.3, "language": "tw", "format": "news, talk", "homepage": "https://www.peacefmonline.com", "stream": "http://peacefm.atunwadigital.streamguys1.com/peacefm", "backup_streams": [], "permission": "not-asked", "note": "Address published on the station's own site on 15 Nov 2026; it is HTTP, so a browser game on HTTPS cannot play it. Look for an HTTPS address."},
+    {"id": "okay-fm", "name": "Okay FM", "frequency_mhz": 101.7, "language": "tw", "format": "entertainment, music", "homepage": "https://www.peacefmonline.com", "stream": "http://okayfm.atunwadigital.streamguys1.com/okayfm", "backup_streams": [], "permission": "not-asked", "note": "Same remark as Peace FM."},
+    {"id": "citi-fm", "name": "Citi FM", "frequency_mhz": 97.3, "language": "en", "format": "news, talk", "homepage": "https://citinewsroom.com", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "asempa-fm", "name": "Asempa FM", "frequency_mhz": 94.7, "language": "tw", "format": "current affairs, sport", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "radio-gold", "name": "Radio Gold", "frequency_mhz": 90.5, "language": "en", "format": "talk", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "accra-fm", "name": "Accra FM", "frequency_mhz": 100.5, "language": "tw", "format": "talk, sport", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "oman-fm", "name": "Oman FM", "frequency_mhz": 107.1, "language": "tw", "format": "talk, music", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "adom-fm", "name": "Adom FM", "frequency_mhz": null, "language": "tw", "format": "talk, music", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "hitz-fm", "name": "Hitz FM", "frequency_mhz": null, "language": "en", "format": "music", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "starr-fm", "name": "Starr FM", "frequency_mhz": null, "language": "en", "format": "news, talk, music", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "yfm", "name": "YFM", "frequency_mhz": null, "language": "en", "format": "youth, music", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "asaase-radio", "name": "Asaase Radio", "frequency_mhz": null, "language": "en", "format": "news, talk", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"},
+    {"id": "gbc-uniiq-fm", "name": "GBC Uniiq FM", "frequency_mhz": null, "language": "en", "format": "public radio", "homepage": "", "stream": "", "backup_streams": [], "permission": "not-asked"}
+  ]
+}
