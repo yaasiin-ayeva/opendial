@@ -1,0 +1,253 @@
+{
+  "country": "BJ",
+  "country_name": "Benin",
+  "city": "Cotonou",
+  "about": "Source list of the FM stations of Cotonou, Benin. Edited by hand. 'stream' is the station's own internet stream; it is left empty when no direct address was found (scripts/discover.py suggests candidates from Radio Browser). 'backup_streams' are other addresses of the same station. 'permission' is asked, granted, refused or not-asked: see AGREEMENTS.md. A null frequency is still to confirm. 'sources' are the pages where the frequency and the stream address were read. 'verified' is unverified, heard (someone heard it play in a browser with tools/listen.html) or checked (scripts/check.py found it live): every address here was copied from web pages on 15 November 2026 and none has been played or checked yet. 'note' says what is doubtful.",
+  "stations": [
+    {
+      "id": "radio-sogema",
+      "name": "Radio Sogema",
+      "frequency_mhz": 87.5,
+      "language": "fr",
+      "format": "variety, music",
+      "homepage": "https://eplus-sports.com/",
+      "stream": "https://stream.zeno.fm/9cpx3k3wyc9uv",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://www.surfmusic.de/country/benin.html",
+        "https://www.surfmusic.de/radio-station/radio-sogema-87-5-fm,26704.html"
+      ],
+      "verified": "unverified",
+      "note": "Everything rests on one directory (surfmusic.de) on 15 Nov 2026: the frequency is read only in the station's name there, and the homepage it gives looks unrelated to the station. Not confirmed that it still broadcasts on FM. Language not researched."
+    },
+    {
+      "id": "ocean-fm",
+      "name": "Océan FM",
+      "frequency_mhz": 88.6,
+      "language": "fr",
+      "format": "news, talk, entertainment",
+      "homepage": "https://lematinal.bj",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Ocean_FM_2"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026; the one directory that lists the station marks its stream as not working. The homepage it gives is a newspaper's site, not opened. Frequency from that one directory (streema)."
+    },
+    {
+      "id": "kiff-fm",
+      "name": "Kiff FM",
+      "frequency_mhz": 92.2,
+      "language": "fr",
+      "format": "music, culture, sport, news",
+      "homepage": "https://srtb.bj/radiokifffmsrtb/",
+      "stream": "https://listen.radioking.com/radio/613798/stream/675604",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Atlantic_FM_Benin",
+        "https://radio.dubbeh.net/stations/atlantic-fm-ortb-1024082",
+        "https://radio.dubbeh.net/stations/kifffm-982252",
+        "https://srtb.bj/radiokifffmsrtb/"
+      ],
+      "verified": "unverified",
+      "note": "Public station (SRTB, formerly ORTB). Doubtful identity: directories give 92.2 MHz for 'Atlantic FM', and one directory lists 'Atlantic FM ORTB' and 'KiffFM' with the same address and the same SRTB page, which is titled Kiff FM and does not mention Atlantic FM. That Kiff FM replaced Atlantic FM on 92.2 was not read on any page, and the SRTB page states no frequency. Address from one directory (15 Nov 2026)."
+    },
+    {
+      "id": "radio-benin",
+      "name": "Radio Bénin",
+      "frequency_mhz": 94.7,
+      "language": "fr",
+      "format": "public, news, talk",
+      "homepage": "https://srtb.bj/radiobeninsrtb/",
+      "stream": "https://listen.radioking.com/radio/47608/stream/84430",
+      "backup_streams": [
+        "https://listen.radioking.com/radio/47608/stream/84424"
+      ],
+      "permission": "not-asked",
+      "sources": [
+        "https://srtb.bj/radiobeninsrtb/",
+        "https://radio.dubbeh.net/stations/radio-benin-ortb-1024668",
+        "https://radio.dubbeh.net/stations/ortb-radio-benin-3375",
+        "https://radio.dubbeh.net/stations/radio-benin-982254",
+        "https://streema.com/radios/ORTB"
+      ],
+      "verified": "unverified",
+      "note": "National public radio (SRTB, formerly ORTB). Frequency from the broadcaster's own page ('Cotonou : 94.7 MHz'); one directory (streema) gives 98.2 instead. Both addresses come from one directory (15 Nov 2026): the first is listed at 192 kbps, the backup at 128 kbps. The broadcaster's page shows no audio address, only a webcast page (https://webcast.streamakaci.com/ortb/1/)."
+    },
+    {
+      "id": "frissons-radio",
+      "name": "Frissons Radio",
+      "frequency_mhz": 95.2,
+      "language": "fr",
+      "format": "news, pop, variety",
+      "homepage": "http://frissonsradiocotonou.com/",
+      "stream": "https://frissonsradio.ice.infomaniak.ch/frissonsradio-128.mp3",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Frissons_Radio",
+        "https://radio.dubbeh.net/stations/frissons-radio-952-982251"
+      ],
+      "verified": "unverified",
+      "note": "Address from one directory page on 15 Nov 2026; the station's own site shows only a player, no address and no frequency. Frequency from three directories."
+    },
+    {
+      "id": "radio-planete",
+      "name": "Radio Planète",
+      "frequency_mhz": 95.7,
+      "language": "fr",
+      "format": "news, entertainment, music",
+      "homepage": "https://planetefm.info/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://planetefm.info/",
+        "https://streema.com/radios/Radio_planete"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026. The station's own site states 95.7 MHz but says it is under construction and shows no stream."
+    },
+    {
+      "id": "capp-fm",
+      "name": "CAPP FM",
+      "frequency_mhz": 99.6,
+      "language": "fr",
+      "format": "news, talk, music",
+      "homepage": "https://cappfm.com/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://cappfm.com/",
+        "https://streema.com/radios/Capp_FM"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026; the station's own site shows none and one directory marks its stream as not working. Frequency from the station's own site, which says it broadcasts in French and in Fon, Yoruba, Goun, Adja and Xwla."
+    },
+    {
+      "id": "ado-fm",
+      "name": "Ado FM",
+      "frequency_mhz": 100.0,
+      "language": "fr",
+      "format": "sport, entertainment",
+      "homepage": "http://www.adotv-fm.bj",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Ado_FM_3"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026; the one directory that lists the station marks its stream as not working. Frequency and homepage from that one directory (streema); the homepage was not opened."
+    },
+    {
+      "id": "radio-immaculee-conception",
+      "name": "Radio Immaculée Conception",
+      "frequency_mhz": 101.0,
+      "language": "fr",
+      "format": "catholic, religious",
+      "homepage": "https://ric.fiafrique.net/",
+      "stream": "https://s1.reliastream.com/proxy/fratel12?mp=/stream",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Immaculee_Concepcion",
+        "https://ric.fiafrique.net/radio.html",
+        "https://radio.dubbeh.net/stations/radio-immaculee-concepcion-987-982256"
+      ],
+      "verified": "unverified",
+      "note": "Address read on the station's own player page on 15 Nov 2026, as the link under the station's name; it goes through a hosting proxy and was not confirmed to be the audio itself. One directory names another host (de1.streamingpulse.com) behind a signed proxy link. Frequency 101.0 for Cotonou from one directory (streema); another directory names the station '98.7', probably another transmitter of the network: confirm."
+    },
+    {
+      "id": "radio-maranatha",
+      "name": "Radio Maranatha",
+      "frequency_mhz": 103.1,
+      "language": "fr",
+      "format": "christian, gospel",
+      "homepage": "http://www.maranathabenin.org/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Maranatha_2",
+        "https://radio.dubbeh.net/stations/radio-maranatha-1031-982257"
+      ],
+      "verified": "unverified",
+      "note": "No usable direct address found on 15 Nov 2026. The station streams through Zeno; the only audio address shown by a directory carries a signed token that expires quickly, so it is not recorded. The homepage given by one directory is an empty placeholder page. Frequency from two directories."
+    },
+    {
+      "id": "radio-tokpa",
+      "name": "Radio Tokpa",
+      "frequency_mhz": 104.3,
+      "language": "fr",
+      "format": "news, talk, entertainment",
+      "homepage": "https://radiotokpa.info/",
+      "stream": "https://radiotokpa.info/liveradio",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://radiotokpa.info/",
+        "https://radio.dubbeh.net/stations/radio-tokpa-1024226",
+        "https://www.surfmusic.de/radio-station/radio-tokpa-104-3-fm,16625.html"
+      ],
+      "verified": "unverified",
+      "note": "Doubtful address: two directories give https://radiotokpa.info/liveradio as the stream (one reports MP3 at 64 kbps), but it sits on the station's own website and may be a page rather than audio; the address could not be opened on 15 Nov 2026. Frequency from the station's own site. The station also broadcasts in Fon."
+    },
+    {
+      "id": "radio-benin-alafia",
+      "name": "Radio Bénin Alafia",
+      "frequency_mhz": 104.7,
+      "language": "fr",
+      "format": "public, news, talk",
+      "homepage": "https://ortb.bj/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Radio_Benin_Alafia",
+        "https://africaho.bj/wp-content/uploads/2025/07/srtb_doc_2.pdf"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026. Public station (SRTB, formerly ORTB). Frequency and homepage from one directory (streema). That directory says French, but an SRTB notice describes correspondents 'in national languages' for this station: the main language is not confirmed."
+    },
+    {
+      "id": "golfe-fm",
+      "name": "Golfe FM",
+      "frequency_mhz": 105.7,
+      "language": "fr",
+      "format": "news, talk, music",
+      "homepage": "http://www.eit.bj/golfefm.htm",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://streema.com/radios/Golfe_FM",
+        "https://www.surfmusic.de/radio-station/golf-fm-105-7,5124.html"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026: one directory marks the stream as unavailable, the other only links its own playlist file. The homepage comes from a directory and was not opened; it may be out of date. Frequency from two directories. Format not researched in detail."
+    },
+    {
+      "id": "bip-radio",
+      "name": "BIP Radio",
+      "frequency_mhz": 106.0,
+      "language": "fr",
+      "format": "news",
+      "homepage": "https://bipradio.com/",
+      "stream": "",
+      "backup_streams": [],
+      "permission": "not-asked",
+      "sources": [
+        "https://bipradio.com/",
+        "https://streema.com/radios/BIP_Radio"
+      ],
+      "verified": "unverified",
+      "note": "No direct stream address found on 15 Nov 2026; the station's own site shows none. Frequency and format (continuous news) from the station's own site."
+    }
+  ]
+}
