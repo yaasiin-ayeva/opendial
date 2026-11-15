@@ -6,19 +6,23 @@
 <title>opendial: an open catalogue of real radio stations</title>
 <meta name="description" content="An open catalogue of real FM radio stations, city by city, with each internet stream checked on a schedule.">
 <style>
+  /* The top bar takes the documentation viewer's own colours, in its light and dark modes. */
   :root { --bar: 48px; --scalar-custom-header-height: 48px; }
   html, body { margin: 0; height: 100%; }
+  body { --bar-bg: #fff; --bar-c1: #1b1b1b; --bar-c2: #707070; --bar-hover: #f6f6f6; --bar-border: #dfdfdf; }
+  body.dark-mode { --bar-bg: #0f0f0f; --bar-c1: #e7e7e7; --bar-c2: #a4a4a4; --bar-hover: #1a1a1a; --bar-border: #2d2d2d; }
   .bar { position: fixed; inset: 0 0 auto 0; height: var(--bar); z-index: 1000; display: flex; align-items: center;
-         gap: 6px; padding: 0 16px; box-sizing: border-box; font: 14px/1 system-ui, sans-serif;
-         background: #101114; color: #f2f2f2; border-bottom: 1px solid #2a2c31; }
-  .bar strong { font-size: 16px; margin-right: 14px; letter-spacing: .01em; }
-  .bar button, .bar a { font: inherit; color: #c9ccd2; background: none; border: 0; padding: 8px 12px; border-radius: 6px;
-                        cursor: pointer; text-decoration: none; }
-  .bar button:hover, .bar a:hover { background: #22242a; color: #fff; }
-  .bar button[aria-pressed="true"] { background: #2b2e36; color: #fff; }
+         gap: 2px; padding: 0 12px 0 20px; box-sizing: border-box;
+         font: 500 14px/1 "Inter", ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+         background: var(--bar-bg); color: var(--bar-c1); border-bottom: .5px solid var(--bar-border); }
+  .bar strong { font-size: 16px; font-weight: 600; margin-right: 16px; }
+  .bar button, .bar a { font: inherit; color: var(--bar-c2); background: none; border: 0; height: 32px; padding: 0 10px;
+                        border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
+  .bar button:hover, .bar a:hover { background: var(--bar-hover); color: var(--bar-c1); }
+  .bar button[aria-pressed="true"] { background: var(--bar-hover); color: var(--bar-c1); }
   .bar .push { margin-left: auto; }
   #docs { padding-top: var(--bar); }
-  #listen { position: fixed; inset: var(--bar) 0 0 0; width: 100%; height: calc(100% - var(--bar)); border: 0; background: Canvas; color-scheme: light dark; }
+  #listen { position: fixed; inset: var(--bar) 0 0 0; width: 100%; height: calc(100% - var(--bar)); border: 0; background: var(--bar-bg); }
   [hidden] { display: none !important; }
   noscript { display: block; padding: 80px 24px; font: 16px/1.5 system-ui, sans-serif; }
 </style>

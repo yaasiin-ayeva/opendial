@@ -7,5 +7,5 @@ opendial is an open catalogue of real radio stations by city. It was started for
 - Never commit secrets, tokens or signing keys. A stream address a station gave the team privately is a secret: it goes in a repository secret, not in a list under `stations/`.
 - No audio is recorded, stored or relayed by this repository: the checker reads a few kilobytes to see that a stream is live and discards them.
 - `public/` and `log/` are written by `scripts/check.py`; do not edit them by hand.
-- A stream address is copied from a page that was opened, never built from a pattern; `CONTRIBUTING.md` has the rules for lists.
+- A stream address is copied from a page that was opened or from the Radio Browser directory (`scripts/refresh.py`), never built from a pattern; `CONTRIBUTING.md` has the rules for lists.
 - When the published JSON changes shape, change `openapi.yaml` in the same commit, and keep `stations/index.json` in step with the lists.

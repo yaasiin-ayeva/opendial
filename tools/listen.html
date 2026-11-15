@@ -10,146 +10,229 @@
   Only a real browser can prove that a stream plays: this page plays each stream as an app would
   (a plain audio element, no Web Audio) and notes what happened. It records and stores no audio.
   hls.js is loaded from a CDN only when a stream is an HLS playlist the browser cannot play itself.
-  The look follows the documentation viewer (Scalar): same type, spacing, borders and colours,
-  light and dark from the system setting.
+
+  The look is the documentation viewer's (Scalar's default theme), measured on the published site:
+  its colours, fonts, sizes, radii, the 288 px sidebar and the table cells. Inside the documentation
+  the page follows the viewer's light or dark mode; on its own it follows the system setting.
 -->
 <style>
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 100 900; font-display: swap;
+    src: url("https://fonts.scalar.com/inter-latin.woff2") format("woff2"); }
+  @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 700; font-display: swap;
+    src: url("https://fonts.scalar.com/mono-latin.woff2") format("woff2"); }
   :root {
-    color-scheme: light dark;
-    --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --bg-1: #ffffff; --bg-2: #f6f6f6; --bg-3: #e7e7e7;
-    --text-1: #1b1b1b; --text-2: #666666; --text-3: #8e8e8e;
-    --border: rgba(0, 0, 0, .1);
-    --accent: #0082d0; --green: #069061; --red: #dc1b19; --orange: #b4670a;
-    --row-current: rgba(0, 130, 208, .08);
-    --radius: 6px; --radius-lg: 9px;
+    --font: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --code: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    --radius: 3px; --radius-lg: 6px; --radius-xl: 8px; --sidebar: 288px;
+    --bg-1: #fff; --bg-2: #f6f6f6; --bg-3: #e7e7e7;
+    --c-1: #1b1b1b; --c-2: #707070; --c-3: #8e8e8e;
+    --border: #dfdfdf; --accent: #0099ff; --accent-bg: #0099ff1f;
+    --green: #069061; --red: #ef0006; --orange: #ff6605; --blue: #0082d0;
+    --btn: #000; --btn-c: #fff; --btn-hover: rgba(0, 0, 0, .8);
+    color-scheme: light;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-1: #0f0f0f; --bg-2: #1a1a1a; --bg-3: #272727;
-      --text-1: #e7e7e7; --text-2: #a4a4a4; --text-3: #797979;
-      --border: rgba(255, 255, 255, .1);
-      --accent: #4eb3ec; --green: #00b648; --red: #ff6b6b; --orange: #ffab66;
-      --row-current: rgba(78, 179, 236, .1);
-    }
+  :root[data-theme="dark"] {
+    --bg-1: #0f0f0f; --bg-2: #1a1a1a; --bg-3: #272727;
+    --c-1: #e7e7e7; --c-2: #a4a4a4; --c-3: #797979;
+    --border: #2d2d2d; --accent: #12abff; --accent-bg: #3ea6ff1f;
+    --green: #00b648; --red: #dc1b19; --orange: #ff8d4d; --blue: #4eb3ec;
+    --btn: #fff; --btn-c: #000; --btn-hover: rgba(255, 255, 255, .9);
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; font: 14px/1.55 var(--font); color: var(--text-1); background: var(--bg-1);
-         -webkit-font-smoothing: antialiased; }
-  .page { max-width: 1180px; margin: 0 auto; padding: 40px 32px 64px; }
-  h1 { font-size: 26px; line-height: 1.25; font-weight: 600; margin: 0 0 8px; letter-spacing: -.01em; }
-  h2 { font-size: 13px; font-weight: 600; margin: 0; color: var(--text-1); }
-  p { margin: 0 0 10px; max-width: 760px; }
-  .lead { font-size: 15px; color: var(--text-2); }
-  .dim { color: var(--text-3); }
-  code { font: 12px var(--mono); background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  html, body { height: 100%; }
+  body { margin: 0; font: 400 14px/1.5 var(--font); color: var(--c-1); background: var(--bg-1);
+         -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  button, input, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
+  code { font: 400 12px/1.6 var(--code); background: var(--bg-2); border-radius: var(--radius); padding: 0 3px; }
 
-  .card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-1); margin: 24px 0 0; overflow: hidden; }
-  .card > header { display: flex; align-items: center; gap: 12px; padding: 9px 14px; background: var(--bg-2); border-bottom: 1px solid var(--border); }
-  .card > .body { padding: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-  .card details { padding: 0 14px 12px; color: var(--text-2); }
-  .card details summary { cursor: pointer; font-size: 13px; padding: 2px 0; }
-  .card details .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+  .layout { display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr); min-height: 100%; }
 
-  label { font-size: 13px; color: var(--text-2); }
-  select, input[type=url] { font: 13px var(--font); color: var(--text-1); background: var(--bg-1); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 7px 10px; min-width: 0; }
-  select { min-width: 280px; }
-  input[type=url] { flex: 1 1 320px; font-family: var(--mono); font-size: 12px; }
-  input[type=file] { font: 12px var(--font); color: var(--text-2); }
-  select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  /* Sidebar: the viewer's own measures (288 px, 12 px gutter, 32 px rows, 14 px / 500). */
+  .side { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: .5px solid var(--border);
+          background: var(--bg-1); padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+  .search { display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 8px; border-radius: var(--radius);
+            background: color-mix(in srgb, var(--bg-2), var(--bg-1)); border: .5px solid var(--border); color: var(--c-3); }
+  .search svg { flex: none; width: 14px; height: 14px; }
+  .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font-size: 14px; color: var(--c-1); }
+  .search input::placeholder { color: var(--c-3); }
+  .nav { display: flex; flex-direction: column; gap: 2px; }
+  .nav h3 { margin: 10px 0 2px; padding: 0 8px; font-size: 12px; font-weight: 500; color: var(--c-3); }
+  .nav h3:first-child { margin-top: 0; }
+  .nav button { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 6px 8px; border: 0;
+                border-radius: var(--radius); background: none; text-align: left; font-size: 14px; font-weight: 500;
+                color: var(--c-2); cursor: pointer; }
+  .nav button:hover { background: var(--bg-2); color: var(--c-1); }
+  .nav button[aria-current="true"] { background: var(--bg-2); color: var(--c-1); }
+  .nav .count { margin-left: auto; font: 600 10px/14px var(--code); color: var(--blue); text-transform: uppercase; white-space: nowrap; }
+  .nav .count.none { color: var(--c-3); }
+  .side .foot { margin-top: auto; font-size: 12px; color: var(--c-3); padding: 0 8px; }
+  .side details { font-size: 13px; color: var(--c-2); padding: 0 8px; }
+  .side details summary { cursor: pointer; padding: 4px 0; }
+  .side details .field { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+  .side details input[type=url] { height: 30px; padding: 0 8px; border: .5px solid var(--border); border-radius: var(--radius);
+                                  background: var(--bg-1); font: 12px var(--code); }
+  .side details input[type=file] { font-size: 12px; color: var(--c-2); }
 
-  button { font: 500 13px var(--font); color: var(--text-1); background: var(--bg-2); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 7px 12px; cursor: pointer; white-space: nowrap; }
-  button:hover:not(:disabled) { background: var(--bg-3); }
-  button:disabled { color: var(--text-3); cursor: default; }
-  button.primary { background: var(--text-1); color: var(--bg-1); border-color: var(--text-1); }
-  button.primary:hover:not(:disabled) { opacity: .88; background: var(--text-1); }
-  button.primary:disabled { opacity: .35; }
-  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 12px; }
-  #status { color: var(--text-2); font-size: 13px; min-height: 1.4em; }
+  /* Content column: the viewer's reading width and type (24/600 title, 16/26 text, 20/600 section). */
+  .main { min-width: 0; padding: 48px 60px 80px; }
+  .inner { max-width: 1120px; margin: 0 auto; }
+  .eyebrow { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .tag { font: 400 12px/1 var(--font); color: var(--c-2); background: var(--bg-2); border-radius: var(--radius-lg); padding: 5px 8px; }
+  h1 { font-size: 24px; line-height: 1.45; font-weight: 600; margin: 0 0 12px; }
+  h2 { font-size: 20px; line-height: 1.15; font-weight: 600; margin: 48px 0 12px; }
+  p { font-size: 16px; line-height: 26px; margin: 0 0 12px; max-width: 720px; }
+  p.small { font-size: 14px; line-height: 22px; color: var(--c-2); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin: 24px 0 0;
+           border: .5px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+  .stat { padding: 12px 16px; border-right: .5px solid var(--border); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-size: 21px; line-height: 1.3; font-weight: 600; }
+  .stat span { font-size: 12px; color: var(--c-2); }
+  .stat.ok b { color: var(--green); } .stat.bad b { color: var(--red); }
 
-  .tablewrap { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; font-size: 13px; }
-  th, td { padding: 9px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 24px 0 12px; }
+  .btn { height: 32px; padding: 0 12px; border: .5px solid var(--border); border-radius: var(--radius);
+         background: var(--bg-1); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+  .btn:hover:not(:disabled) { background: var(--bg-2); }
+  .btn:disabled { color: var(--c-3); cursor: default; }
+  .btn.primary { background: var(--btn); color: var(--btn-c); border-color: var(--btn); }
+  .btn.primary:hover:not(:disabled) { background: var(--btn-hover); }
+  .btn.primary:disabled { opacity: .4; }
+  .seg { display: inline-flex; border: .5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-left: auto; }
+  .seg button { height: 30px; padding: 0 10px; border: 0; background: none; font-size: 13px; font-weight: 500; color: var(--c-2); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--bg-2); color: var(--c-1); }
+  .seg button:disabled { color: var(--c-3); cursor: default; }
+  #status { flex-basis: 100%; min-height: 22px; font-size: 13px; color: var(--c-2); }
+
+  /* Table: the viewer's cells (14 px, 8.5 px by 16 px, half-pixel rules, header on background 2). */
+  .tablewrap { border: .5px solid var(--border); border-radius: var(--radius-xl); overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; line-height: 22.75px; }
+  th, td { padding: 8.5px 16px; text-align: left; vertical-align: top; border-bottom: .5px solid var(--border); }
   tbody tr:last-child td { border-bottom: 0; }
-  th { position: sticky; top: 0; z-index: 1; background: var(--bg-2); color: var(--text-2); font-weight: 500; font-size: 12px; white-space: nowrap; }
-  td:first-child { font-family: var(--mono); font-size: 12px; white-space: nowrap; color: var(--text-2); }
-  td:nth-child(2) { font-weight: 500; }
-  td.url { font: 12px/1.5 var(--mono); color: var(--text-2); word-break: break-all; max-width: 320px; }
-  td button { padding: 4px 12px; font-size: 12px; min-width: 52px; }
-  tr.current { background: var(--row-current); }
+  th { position: sticky; top: 0; z-index: 1; background: var(--bg-2); font-weight: 600; white-space: nowrap; }
+  td:first-child { font: 400 12px/22.75px var(--code); color: var(--c-2); white-space: nowrap; }
+  td.name { font-weight: 500; min-width: 150px; }
+  td.name small { display: block; font-size: 12px; line-height: 18px; font-weight: 400; color: var(--c-3); }
+  td.url { font: 400 12px/19.5px var(--code); color: var(--c-2); word-break: break-all; max-width: 340px; }
+  td .btn { height: 26px; min-width: 54px; font-size: 12px; }
+  tr.current td { background: var(--accent-bg); }
+  tr.hidden { display: none; }
+  .dim { color: var(--c-3); }
   .ok, .bad, .warn { font-weight: 500; }
   .ok { color: var(--green); } .bad { color: var(--red); } .warn { color: var(--orange); }
-  td.ok::before, td.bad::before, td.warn::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-    background: currentColor; margin-right: 7px; vertical-align: 1px; }
+  td.ok::before, td.bad::before, td.warn::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor; margin-right: 8px; vertical-align: 2px; }
 
-  .notes { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-  .notes div { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; color: var(--text-2); font-size: 13px; }
-  .notes b { display: block; color: var(--text-1); font-weight: 600; margin-bottom: 4px; }
-  @media (max-width: 640px) { .page { padding: 24px 16px 48px; } select { min-width: 0; width: 100%; } }
+  dl.help { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 0; margin: 0; max-width: 820px;
+            border: .5px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; font-size: 14px; line-height: 22.75px; }
+  dl.help dt, dl.help dd { margin: 0; padding: 8.5px 16px; border-bottom: .5px solid var(--border); }
+  dl.help dt { font-weight: 600; background: var(--bg-2); }
+  dl.help dd { color: var(--c-2); }
+  dl.help dt:last-of-type, dl.help dd:last-of-type { border-bottom: 0; }
+
+  @media (max-width: 1000px) {
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; height: auto; border-right: 0; border-bottom: .5px solid var(--border); }
+    .side .foot { display: none; }
+    .main { padding: 28px 20px 60px; }
+    .seg { margin-left: 0; }
+  }
 </style>
+<script>
+  // Theme before first paint: the documentation's mode when embedded in it, else the system's.
+  (function () {
+    var root = document.documentElement;
+    function systemDark() { return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches; }
+    function apply() {
+      var mode = null;
+      try {
+        if (window.parent !== window) {
+          var c = window.parent.document.body.classList;
+          mode = c.contains('dark-mode') ? 'dark' : c.contains('light-mode') ? 'light' : null;
+        }
+      } catch (e) { /* another origin: fall back to the system */ }
+      root.dataset.theme = mode || (systemDark() ? 'dark' : 'light');
+    }
+    apply();
+    try {
+      if (window.parent !== window) new MutationObserver(apply).observe(window.parent.document.body, { attributes: true, attributeFilter: ['class'] });
+    } catch (e) { /* ignore */ }
+    if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apply);
+  })();
+</script>
 </head>
 <body>
-<div class="page">
-  <h1>Listening test</h1>
-  <p class="lead">Plays each stream of a city in this browser, one at a time, the way an app will: a plain audio
-  element, straight from the station's server. Nothing plays before you click, and no audio is recorded or stored.</p>
-  <p class="dim">This page's origin: <code id="origin"></code> <span id="originNote"></span></p>
-
-  <section class="card">
-    <header><h2>List to test</h2></header>
-    <div class="body">
-      <label for="cat">City</label>
-      <select id="cat" aria-label="List to test"></select>
-      <button id="reload" type="button">Reload</button>
-    </div>
+<div class="layout">
+  <aside class="side" aria-label="Cities">
+    <label class="search">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+      <input id="filter" type="search" placeholder="Filter stations" aria-label="Filter the stations of this city">
+    </label>
+    <nav class="nav" id="nav" aria-label="Cities by country"></nav>
     <details>
-      <summary>Another address or a file</summary>
-      <div class="row">
-        <input type="url" id="catUrl" aria-label="Address of a list" placeholder="https://…/stations.json">
-        <button id="loadUrl" type="button">Load address</button>
+      <summary>Another list</summary>
+      <div class="field">
+        <input type="url" id="catUrl" aria-label="Address of a list" placeholder="https://…/list.json">
+        <button class="btn" id="loadUrl" type="button">Load address</button>
       </div>
-      <div class="row">
+      <div class="field">
         <label for="catFile">File from disk</label>
         <input type="file" id="catFile" accept=".json,application/json">
       </div>
-      <p class="dim" style="margin-top:10px">Opened from disk (file://), most browsers refuse to fetch a neighbouring file: use the file picker.</p>
     </details>
-  </section>
+    <p class="foot">Origin <code id="origin"></code><br><span id="originNote"></span></p>
+  </aside>
 
-  <div class="toolbar">
-    <button id="testAll" class="primary" type="button" disabled>Test all (8 s each)</button>
-    <button id="stopAll" type="button" disabled>Stop</button>
-    <button id="export" type="button" disabled>Export results</button>
-    <span id="status" role="status"></span>
-  </div>
+  <main class="main">
+    <div class="inner">
+      <div class="eyebrow"><span class="tag">Listening test</span><span class="tag" id="tagCountry" hidden></span><span class="tag" id="tagChecked" hidden></span></div>
+      <h1 id="title">Listening test</h1>
+      <p>Plays each stream of a city in this browser, one at a time, the way an app will: a plain audio element,
+      straight from the station's server. Nothing plays before you click, and no audio is recorded or stored.</p>
 
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr>
-          <th>MHz</th><th>Station</th><th>Stream</th><th>Scheme</th><th></th>
-          <th>Playback</th><th>First sound</th><th>CORS</th>
-        </tr>
-      </thead>
-      <tbody id="rows"><tr><td colspan="8" class="dim">No list loaded yet.</td></tr></tbody>
-    </table>
-  </div>
+      <div class="stats" id="stats" hidden>
+        <div class="stat"><b id="nStations">0</b><span>stations</span></div>
+        <div class="stat"><b id="nStreams">0</b><span>with a stream address</span></div>
+        <div class="stat ok"><b id="nPlayed">–</b><span>played in this test</span></div>
+        <div class="stat bad"><b id="nFailed">–</b><span>failed in this test</span></div>
+        <div class="stat"><b id="nCors">–</b><span>allow Web Audio (CORS)</span></div>
+      </div>
 
-  <div class="notes">
-    <div><b>Scheme</b>A page served over HTTPS cannot play an HTTP stream: browsers block it.</div>
-    <div><b>Playback</b>"played" means the audio element fired its <code>playing</code> event. Still listen:
-      a stream can play silence or an advert loop.</div>
-    <div><b>CORS</b>A separate <code>fetch()</code>, stopped as soon as the headers arrive. "allowed" means the
-      server accepts this page's origin, which is needed only to route audio through Web Audio (filters, visualisers),
-      not for plain playback. "refused" also covers a server that did not answer.</div>
-    <div><b>Test all</b>Starts each stream without a new click. A browser that blocks this reports
-      NotAllowedError: press Play on one stream first, or allow sound for this page.</div>
-  </div>
+      <div class="toolbar">
+        <button id="testAll" class="btn primary" type="button" disabled>Test all (8 s each)</button>
+        <button id="stopAll" class="btn" type="button" disabled>Stop</button>
+        <button id="export" class="btn" type="button" disabled>Export results</button>
+        <div class="seg" role="group" aria-label="Which stations">
+          <button id="viewAll" type="button" aria-pressed="true">Every station</button>
+          <button id="viewPublished" type="button" aria-pressed="false" disabled>Published</button>
+        </div>
+        <span id="status" role="status"></span>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>MHz</th><th>Station</th><th>Stream</th><th>Scheme</th><th></th>
+              <th>Playback</th><th>First sound</th><th>CORS</th>
+            </tr>
+          </thead>
+          <tbody id="rows"><tr><td colspan="8" class="dim">Choose a city.</td></tr></tbody>
+        </table>
+      </div>
+
+      <h2>Reading the results</h2>
+      <dl class="help">
+        <dt>Scheme</dt><dd>A page served over HTTPS cannot play an HTTP stream: browsers block it.</dd>
+        <dt>Playback</dt><dd>"played" means the audio element fired its <code>playing</code> event. Still listen: a stream can play silence or an advert loop.</dd>
+        <dt>CORS</dt><dd>A separate <code>fetch()</code>, stopped as soon as the headers arrive. "allowed" means the server accepts this page's origin, which is needed only to route audio through Web Audio (filters, visualisers), not for plain playback. "refused" also covers a server that did not answer.</dd>
+        <dt>Test all</dt><dd>Starts each stream without a new click. A browser that blocks this reports NotAllowedError: press Play on one stream first, or allow sound for this page.</dd>
+        <dt>Published</dt><dd>The stations that passed the last scheduled check, as apps receive them. "Every station" is the hand-edited list, including stations whose stream is down or unknown.</dd>
+      </dl>
+    </div>
+  </main>
 </div>
 
 <script>
@@ -250,7 +333,8 @@ function draw() {
   streams.forEach(function (s) {
     var tr = document.createElement('tr');
     cell(tr, s.mhz === null ? '?' : s.mhz.toFixed(1));
-    cell(tr, s.station + (s.role === 'main' || s.role === 'none' ? '' : ' (' + s.role + ')'));
+    var nameCell = cell(tr, s.station, 'name');
+    if (s.role !== 'main' && s.role !== 'none') { var sm = document.createElement('small'); sm.textContent = s.role; nameCell.appendChild(sm); }
     cell(tr, s.url || 'no address yet', s.url ? 'url' : 'dim');
     var sch = scheme(s.url);
     if (!s.url) cell(tr, '');
@@ -260,6 +344,8 @@ function draw() {
     var td = document.createElement('td');
     if (sch) {
       s.button = document.createElement('button');
+      s.button.className = 'btn';
+      s.button.type = 'button';
       s.button.textContent = 'Play';
       s.button.addEventListener('click', function () {
         if (running) return;
@@ -469,44 +555,121 @@ function exportResults() {
 
 $('origin').textContent = location.origin;
 $('originNote').textContent = PAGE_IS_HTTPS
-  ? 'Served over HTTPS, like a real app: HTTP streams are blocked here too.'
-  : 'Not served over HTTPS: an HTTP stream may play here and still be blocked in an app. From file:// the origin is "null", so the CORS test passes only for servers that allow every origin.';
+  ? 'HTTPS, like a real app: HTTP streams are blocked here too.'
+  : 'Not HTTPS: an HTTP stream may play here and still be blocked in an app.';
 
-// The city menu: every hand-edited list (stations/index.json), then every published catalogue
-// (public/index.json, present once the scheduled check has run).
-function option(group, path, label) {
-  var o = document.createElement('option');
-  o.value = path; o.textContent = label;
-  group.appendChild(o);
+var cities = [];          // {path, country, country_name, city, published, listed, checked_at}
+var currentCity = null, view = 'all';
+
+function get(url) {
+  return fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
 }
-function fillMenu() {
-  var menu = $('cat');
-  function group(label) { var g = document.createElement('optgroup'); g.label = label; menu.appendChild(g); return g; }
-  function get(url) { return fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+
+// The sidebar: every hand-edited list (stations/index.json) by country, with what the last
+// scheduled check published for it (public/index.json), when there is one.
+function buildNav() {
   return Promise.all([get('../stations/index.json'), get('../public/index.json')]).then(function (both) {
-    var lists = (both[0] && both[0].lists) || [], cities = (both[1] && both[1].cities) || [];
-    if (lists.length) {
-      var g1 = group('Every station (hand-edited list)');
-      lists.forEach(function (l) { option(g1, '../stations/' + l.path, l.city + ', ' + l.country_name); });
+    var lists = (both[0] && both[0].lists) || [], pub = {};
+    ((both[1] && both[1].cities) || []).forEach(function (c) { pub[c.path] = c; });
+    cities = lists.map(function (l) {
+      var p = pub[l.path] || {};
+      return { path: l.path, country: l.country, country_name: l.country_name, city: l.city,
+               published: typeof p.published === 'number' ? p.published : null, listed: p.listed, checked_at: p.checked_at || null };
+    }).sort(function (a, b) { return a.country_name.localeCompare(b.country_name) || a.city.localeCompare(b.city); });
+    var nav = $('nav'), last = null;
+    nav.textContent = '';
+    cities.forEach(function (c) {
+      if (c.country_name !== last) {
+        var h = document.createElement('h3'); h.textContent = c.country_name; nav.appendChild(h); last = c.country_name;
+      }
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.appendChild(document.createTextNode(c.city));
+      var n = document.createElement('span');
+      n.className = 'count' + (c.published === null ? ' none' : '');
+      n.textContent = c.published === null ? 'not checked' : c.published + ' live';
+      n.title = c.published === null ? 'The scheduled check has not published this city yet'
+                                     : c.published + ' of ' + c.listed + ' stations passed the last check';
+      b.appendChild(n);
+      b.addEventListener('click', function () { openCity(c, 'all'); });
+      c.button = b;
+      nav.appendChild(b);
+    });
+    if (!cities.length) {
+      var p = document.createElement('p'); p.className = 'dim'; p.textContent = 'No list found: use "Another list".'; nav.appendChild(p);
     }
-    if (cities.length) {
-      var g2 = group('Passed the last check (published)');
-      cities.forEach(function (c) { option(g2, '../public/' + c.path, c.city + ', ' + (c.country_name || c.country) + ' (' + c.published + ' of ' + c.listed + ')'); });
-    }
-    if (!menu.options.length) { option(menu, '', 'No list found: use another address or a file'); menu.disabled = true; }
   });
 }
 
-$('cat').addEventListener('change', function () { if (this.value) loadFromUrl(this.value); });
-$('reload').addEventListener('click', function () { if ($('cat').value) loadFromUrl($('cat').value); });
-$('loadUrl').addEventListener('click', function () { var u = $('catUrl').value.trim(); if (u) loadFromUrl(u); });
+function openCity(c, which) {
+  if (running) return;
+  currentCity = c; view = which;
+  cities.forEach(function (x) { x.button.setAttribute('aria-current', String(x === c)); });
+  $('title').textContent = c.city;
+  $('tagCountry').hidden = false; $('tagCountry').textContent = c.country_name;
+  $('tagChecked').hidden = !c.checked_at;
+  if (c.checked_at) $('tagChecked').textContent = 'Last check ' + c.checked_at.slice(0, 16).replace('T', ' ') + ' UTC';
+  $('viewPublished').disabled = c.published === null;
+  $('viewAll').setAttribute('aria-pressed', String(which === 'all'));
+  $('viewPublished').setAttribute('aria-pressed', String(which === 'published'));
+  $('filter').value = '';
+  remember('opendial-city', c.path);
+  loadFromUrl((which === 'published' ? '../public/' : '../stations/') + c.path);
+}
+
+// Counters above the table, refreshed while a test runs.
+function refreshStats() {
+  var seen = {}, withStream = {}, played = {}, failed = {}, cors = {}, tested = false;
+  streams.forEach(function (s) {
+    seen[s.id] = true;
+    if (s.url) withStream[s.id] = true;
+    if (s.result) {
+      tested = true;
+      if (s.result.seconds_to_first_sound !== null && s.result.seconds_to_first_sound !== undefined) played[s.id] = true;
+      if (s.result.cors === 'allowed') cors[s.id] = true;
+    }
+  });
+  Object.keys(seen).forEach(function (id) {
+    var any = streams.some(function (s) { return s.id === id && s.result; });
+    if (any && !played[id]) failed[id] = true;
+  });
+  function n(o) { return Object.keys(o).length; }
+  $('stats').hidden = !streams.length;
+  $('nStations').textContent = n(seen);
+  $('nStreams').textContent = n(withStream);
+  $('nPlayed').textContent = tested ? n(played) : '–';
+  $('nFailed').textContent = tested ? n(failed) : '–';
+  $('nCors').textContent = tested ? n(cors) : '–';
+}
+setInterval(refreshStats, 1000);
+
+$('filter').addEventListener('input', function () {
+  var q = this.value.trim().toLowerCase();
+  streams.forEach(function (s) {
+    if (s.tr) s.tr.classList.toggle('hidden', !!q && (s.station + ' ' + (s.mhz === null ? '' : s.mhz.toFixed(1)) + ' ' + s.url).toLowerCase().indexOf(q) < 0);
+  });
+});
+$('viewAll').addEventListener('click', function () { if (currentCity) openCity(currentCity, 'all'); });
+$('viewPublished').addEventListener('click', function () { if (currentCity && currentCity.published !== null) openCity(currentCity, 'published'); });
+$('loadUrl').addEventListener('click', function () {
+  var u = $('catUrl').value.trim();
+  if (!u || running) return;
+  currentCity = null; cities.forEach(function (x) { x.button.setAttribute('aria-current', 'false'); });
+  $('title').textContent = 'Another list'; $('tagCountry').hidden = true; $('tagChecked').hidden = true;
+  loadFromUrl(u);
+});
 $('catFile').addEventListener('change', function () {
   var f = this.files[0];
-  if (!f) return;
+  if (!f || running) return;
   var reader = new FileReader();
   reader.onload = function () {
-    try { readCatalogue(JSON.parse(reader.result), f.name); }
-    catch (e) { setStatus('Could not read ' + f.name + ': ' + e.message); }
+    try {
+      var data = JSON.parse(reader.result);
+      currentCity = null; cities.forEach(function (x) { x.button.setAttribute('aria-current', 'false'); });
+      $('title').textContent = data.city || f.name; $('tagCountry').hidden = !data.country_name;
+      $('tagCountry').textContent = data.country_name || ''; $('tagChecked').hidden = true;
+      readCatalogue(data, f.name);
+    } catch (e) { setStatus('Could not read ' + f.name + ': ' + e.message); }
   };
   reader.readAsText(f);
 });
@@ -515,10 +678,11 @@ $('stopAll').addEventListener('click', function () { running = false; stopCurren
 $('export').addEventListener('click', exportResults);
 
 // Loading a list is not playing: it is safe to do before any click.
-fillMenu().then(function () {
-  var menu = $('cat'), saved = recall('opendial-list');
-  if (saved && Array.prototype.some.call(menu.options, function (o) { return o.value === saved; })) menu.value = saved;
-  if (menu.value) loadFromUrl(menu.value);
+buildNav().then(function () {
+  if (!cities.length) return;
+  var saved = recall('opendial-city'), wanted = new URLSearchParams(location.search).get('city');
+  var first = cities.filter(function (c) { return c.path === (wanted ? wanted + '.json' : saved); })[0] || cities[0];
+  openCity(first, 'all');
 });
 </script>
 </body>

@@ -29,6 +29,7 @@ Treat it as a hint, not a promise: a stream can fail between two checks, so fall
 | 2. Listen | `tools/listen.html` | A person tests the list in a real browser |
 | 3. Check | `scripts/check.py`, every 30 minutes | Each stream must answer with audio, over HTTPS |
 | 4. Publish | `public/<country>/<city>.json` | The stations that passed, with `hls`, `cors` and `permission` |
+| 5. Refresh | `scripts/refresh.py`, every Monday | For a station whose stream is down or unknown, looks for a working address in the Radio Browser directory and proposes it as a pull request |
 
 ## Repository
 
@@ -36,7 +37,7 @@ Treat it as a hint, not a promise: a stream can fail between two checks, so fall
 stations/        hand-edited lists, one per city, and index.json naming them
 public/          generated: the catalogue apps read (do not edit)
 log/             generated: one line per station per check, for uptime (do not edit)
-scripts/         check.py (the checker), discover.py (suggests addresses from Radio Browser)
+scripts/         check.py (the checker), refresh.py (repairs dead addresses), discover.py (lists candidates)
 tools/           listen.html, the listening test
 tests/           tests of the checker and of the lists, no internet needed
 docs/            agreements.md, the stations' answers
@@ -50,11 +51,22 @@ openapi.yaml     the description of the published files
 
 ```bash
 python3 scripts/check.py                 # check every city; or one: scripts/check.py gh/accra
+python3 scripts/refresh.py               # repair dead addresses from Radio Browser (edits the lists, commits nothing)
 python3 scripts/discover.py gh/accra     # candidate addresses for the stations of a list
 python3 -m unittest discover -s tests    # tests, local only
 ```
 
-Standard library only. The scheduled check tests CORS against the origin in the repository variable `APP_ORIGIN`.
+Standard library only.
+
+### Automation
+
+| Workflow | When | What it does |
+| --- | --- | --- |
+| `check.yml` | Every 30 minutes | Tests every stream, commits `public/` and `log/` |
+| `refresh.yml` | Mondays, 05:17 UTC, or by hand | Runs `refresh.py` and opens a pull request with the repaired addresses; an issue with a link if the repository does not let workflows open pull requests |
+| `tests.yml` | Pull requests and pushes to `main` | Runs the tests |
+
+The refresh never merges itself: an address from a community directory can be wrong, so a person runs the listening test before merging. The scheduled check tests CORS against the origin in the repository variable `APP_ORIGIN`.
 
 ## State
 

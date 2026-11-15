@@ -1,0 +1,52 @@
+name: refresh addresses
+
+# Once a week, look for a working address for the stations whose stream is down or unknown, and
+# propose the result as a pull request. Nothing is merged without a person reading it.
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"   # Mondays, 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Look for working addresses
+        run: python3 scripts/refresh.py --origin "${{ vars.APP_ORIGIN || 'https://app.example' }}" --report "$RUNNER_TEMP/report.md"
+      - name: Stop here when nothing changed
+        id: diff
+        run: |
+          if git diff --quiet -- stations; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+          cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Test the lists
+        if: steps.diff.outputs.changed == 'true'
+        run: python3 -m unittest discover -s tests   # a pull request opened by a workflow starts no other workflow
+      - name: Propose the changes
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          branch="refresh/$(date -u +%Y-%m-%d)"
+          git config user.name "opendial refresh"
+          git config user.email "refresh@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add stations
+          git commit -m "Replace the addresses that stopped answering" -m "Weekly refresh: each new address comes from the Radio Browser directory and answered with audio over HTTPS. Nobody has listened to it yet."
+          git push --force origin "$branch"
+          title="Weekly refresh: addresses that stopped answering"
+          if ! gh pr create --base main --head "$branch" --title "$title" --body-file "$RUNNER_TEMP/report.md"; then
+            # The repository may not let workflows open pull requests: leave an issue with the link instead.
+            printf '\n\nThe workflow could not open the pull request itself. Open it here: %s/%s/compare/main...%s?expand=1\n' \
+              "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$branch" >> "$RUNNER_TEMP/report.md"
+            gh issue create --title "$title" --body-file "$RUNNER_TEMP/report.md"
+          fi
