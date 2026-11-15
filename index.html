@@ -3,22 +3,74 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>opendial</title>
+<title>opendial: an open catalogue of real radio stations</title>
+<meta name="description" content="An open catalogue of real FM radio stations, city by city, with each internet stream checked on a schedule.">
 <style>
-  body { font: 16px/1.5 system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1rem; color: #1b1b1b; background: #fafafa; }
-  a { color: #0b57d0; }
-  code { background: #eee; padding: 0 .25em; border-radius: 3px; }
-  @media (prefers-color-scheme: dark) { body { color: #e8e8e8; background: #161616; } a { color: #8ab4f8; } code { background: #2a2a2a; } }
+  :root { --bar: 48px; --scalar-custom-header-height: 48px; }
+  html, body { margin: 0; height: 100%; }
+  .bar { position: fixed; inset: 0 0 auto 0; height: var(--bar); z-index: 1000; display: flex; align-items: center;
+         gap: 6px; padding: 0 16px; box-sizing: border-box; font: 14px/1 system-ui, sans-serif;
+         background: #101114; color: #f2f2f2; border-bottom: 1px solid #2a2c31; }
+  .bar strong { font-size: 16px; margin-right: 14px; letter-spacing: .01em; }
+  .bar button, .bar a { font: inherit; color: #c9ccd2; background: none; border: 0; padding: 8px 12px; border-radius: 6px;
+                        cursor: pointer; text-decoration: none; }
+  .bar button:hover, .bar a:hover { background: #22242a; color: #fff; }
+  .bar button[aria-pressed="true"] { background: #2b2e36; color: #fff; }
+  .bar .push { margin-left: auto; }
+  #docs { padding-top: var(--bar); }
+  #listen { position: fixed; inset: var(--bar) 0 0 0; width: 100%; height: calc(100% - var(--bar)); border: 0; background: #fff; }
+  [hidden] { display: none !important; }
+  noscript { display: block; padding: 80px 24px; font: 16px/1.5 system-ui, sans-serif; }
 </style>
 </head>
 <body>
-<h1>opendial</h1>
-<p>An open catalogue of real FM radio stations, city by city, with each internet stream checked on a schedule. It starts with Accra, Ghana. opendial does not relay, record or store audio.</p>
-<ul>
-  <li><a href="tools/listen.html">Listen and test the streams</a> in this browser</li>
-  <li><a href="stations/gh/accra.json">Accra, the hand-edited list</a> (<code>stations/gh/accra.json</code>)</li>
-  <li><a href="public/index.json">Published cities</a> (<code>public/index.json</code>, written by the scheduled check)</li>
-  <li><a href="https://github.com/yaasiin-ayeva/opendial">Source and documentation on GitHub</a></li>
-</ul>
+<header class="bar">
+  <strong>opendial</strong>
+  <button id="tabDocs" type="button" aria-pressed="true">Documentation</button>
+  <button id="tabListen" type="button" aria-pressed="false">Listening test</button>
+  <a class="push" href="https://github.com/yaasiin-ayeva/opendial">GitHub</a>
+</header>
+
+<main id="docs"><div id="app"></div></main>
+<iframe id="listen" title="Listening test" hidden></iframe>
+
+<noscript>opendial's documentation needs JavaScript. The same content is in the
+<a href="https://github.com/yaasiin-ayeva/opendial#readme">README</a>, and the catalogue is plain JSON:
+<a href="public/index.json">public/index.json</a>.</noscript>
+
+<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+<script>
+  // Two views on one page: the documentation (Scalar, from openapi.yaml) and the listening test
+  // (tools/listen.html in a frame, loaded on first use). ?view=listen opens the test directly.
+  var docs = document.getElementById('docs'), frame = document.getElementById('listen');
+  var tabDocs = document.getElementById('tabDocs'), tabListen = document.getElementById('tabListen');
+  function show(view, push) {
+    var listen = view === 'listen';
+    if (listen && !frame.getAttribute('src')) frame.setAttribute('src', 'tools/listen.html');
+    docs.hidden = listen; frame.hidden = !listen;
+    tabDocs.setAttribute('aria-pressed', String(!listen)); tabListen.setAttribute('aria-pressed', String(listen));
+    if (push) history.pushState(null, '', listen ? '?view=listen' : location.pathname);
+  }
+  function current() { return new URLSearchParams(location.search).get('view') === 'listen' ? 'listen' : 'docs'; }
+  tabDocs.addEventListener('click', function () { show('docs', true); });
+  tabListen.addEventListener('click', function () { show('listen', true); });
+  window.addEventListener('popstate', function () { show(current(), false); });
+  // Links to ?view=listen inside the documentation switch the view without a reload.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (a && /[?&]view=listen/.test(a.getAttribute('href'))) { e.preventDefault(); show('listen', true); }
+  });
+  show(current(), false);
+
+  if (window.Scalar) {
+    Scalar.createApiReference('#app', {
+      url: 'openapi.yaml',
+      hideClientButton: true,
+      metaData: { title: 'opendial: an open catalogue of real radio stations' }
+    });
+  } else {
+    document.getElementById('app').innerHTML = '<p style="padding:24px;font:16px/1.5 system-ui,sans-serif">The documentation viewer could not be loaded. See the <a href="https://github.com/yaasiin-ayeva/opendial#readme">README</a> or <a href="openapi.yaml">openapi.yaml</a>.</p>';
+  }
+</script>
 </body>
 </html>

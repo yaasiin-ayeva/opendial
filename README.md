@@ -8,11 +8,12 @@ Its first user is the game CHALE: Accra Nights, whose car radio plays the real A
 
 ## Online
 
-- Test page: https://yaasiin-ayeva.github.io/opendial/tools/listen.html
+- Documentation: https://yaasiin-ayeva.github.io/opendial/
+- Listening test, inside the documentation: https://yaasiin-ayeva.github.io/opendial/?view=listen
 - Catalogue of a city, once the scheduled check has run: https://yaasiin-ayeva.github.io/opendial/public/gh/accra.json
 - Index of cities: https://yaasiin-ayeva.github.io/opendial/public/index.json
 
-The site is GitHub Pages serving the `main` branch as it is (`.nojekyll`); `index.html` is its front page.
+The site is GitHub Pages serving the `main` branch as it is (`.nojekyll`). `index.html` renders `openapi.yaml` with [Scalar](https://github.com/scalar/scalar), loaded from a CDN, and shows `tools/listen.html` behind its "Listening test" button. When the published JSON changes shape, change `openapi.yaml` in the same commit.
 
 ## Contents
 
@@ -22,6 +23,8 @@ stations/<country>/<city>.json   the source list of one city, edited by hand: na
                                  verified (unverified, heard, checked). Today: stations/gh/accra.json
 scripts/check.py                 checks every stream and writes public/ and log/
 scripts/discover.py              suggests stream addresses from the Radio Browser directory (prints only)
+openapi.yaml                     the description of the published files, rendered as the documentation
+index.html                       the documentation site (Scalar) with the listening test
 tools/listen.html                a page to open in a browser: plays each stream, notes what happened,
                                  exports the results
 tests/test_check.py              tests of the checker against a local server (no internet needed)
