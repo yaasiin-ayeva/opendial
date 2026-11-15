@@ -6,6 +6,14 @@ opendial does **not** relay, record or store audio. An app that uses it plays ea
 
 Its first user is the game CHALE: Accra Nights, whose car radio plays the real Accra stations (circle-bible `DECISIONS.md`, 15 November 2026). Nothing in opendial is specific to the game.
 
+## Online
+
+- Test page: https://yaasiin-ayeva.github.io/opendial/tools/listen.html
+- Catalogue of a city, once the scheduled check has run: https://yaasiin-ayeva.github.io/opendial/public/gh/accra.json
+- Index of cities: https://yaasiin-ayeva.github.io/opendial/public/index.json
+
+The site is GitHub Pages serving the `main` branch as it is (`.nojekyll`); `index.html` is its front page.
+
 ## Contents
 
 ```
