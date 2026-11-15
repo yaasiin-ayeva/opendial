@@ -5,8 +5,8 @@ info:
   summary: An open catalogue of real FM radio stations, city by city, with each stream checked on a schedule.
   description: |
     opendial keeps a hand-edited list of the FM stations of a city, tests the internet stream of each
-    one on a schedule, and publishes the stations a web page can play now. It starts with
-    **Accra, Ghana**; other cities and countries are added as new lists.
+    one on a schedule, and publishes the stations a web page can play now. It covers
+    **Accra** (Ghana), **Cotonou** (Benin) and **Lomé** (Togo); other cities are added as new lists.
 
     opendial does **not** relay, record or store audio. An app that uses it plays each station's own
     stream directly in the listener's browser.
@@ -43,7 +43,8 @@ info:
 
     Accra is the first city: 18 stations. On 15 November 2026 the listening test played 14 of them in
     Chrome; 13 of those also allow Web Audio (`cors`). Class FM, GBC Uniiq FM, Okay FM and Oman FM did
-    not load and still need a working address. Nobody has yet listened to confirm that each stream is
+    not load and still need a working address. Lomé (13 stations) and Cotonou (14) were added the
+    same day; 11 of their stations have a stream address and none has been played yet. Nobody has yet listened to confirm that each stream is
     the station it claims to be. The published catalogue only ever contains streams that passed the
     automatic check.
 
