@@ -1,0 +1,75 @@
+{
+  "country": "TG",
+  "city": "Lomé",
+  "checked_at": "2026-11-15T19:19:58+00:00",
+  "stations": [
+    {
+      "id": "sport-fm",
+      "name": "Sport FM",
+      "frequency_mhz": 91.9,
+      "language": "fr",
+      "format": "sport",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://listen.radioking.com/radio/512377/stream/570244",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 128
+        }
+      ]
+    },
+    {
+      "id": "kanal-fm",
+      "name": "Kanal FM",
+      "frequency_mhz": 93.5,
+      "language": "fr",
+      "format": "news, talk",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://radio.kanalfm.com/KANALFM",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 96
+        }
+      ]
+    },
+    {
+      "id": "light-radio",
+      "name": "Light Radio",
+      "frequency_mhz": 93.9,
+      "language": "fr",
+      "format": "christian, gospel",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://a9.asurahosting.com/listen/light_radio_93.9fm/radio.mp3",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 192
+        }
+      ]
+    },
+    {
+      "id": "nana-fm",
+      "name": "Nana FM",
+      "frequency_mhz": 95.5,
+      "language": "fr",
+      "format": "talk, news, music",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://srv1269271.hstgr.cloud/;?type=http&nocache=16",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 64
+        }
+      ]
+    }
+  ]
+}
