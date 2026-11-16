@@ -1,7 +1,7 @@
 {
   "country": "GH",
   "city": "Accra",
-  "checked_at": "2026-11-16T10:56:53+00:00",
+  "checked_at": "2026-11-16T20:51:16+00:00",
   "stations": [
     {
       "id": "radio-gold",
@@ -21,19 +21,19 @@
       ]
     },
     {
-      "id": "class-fm",
-      "name": "Class FM",
-      "frequency_mhz": 91.3,
+      "id": "3fm",
+      "name": "3FM",
+      "frequency_mhz": 92.7,
       "language": "en",
       "format": "news, talk, music",
       "permission": "not-asked",
       "streams": [
         {
-          "url": "https://classfm-atunwadigital.streamguys1.com/classfm",
+          "url": "https://3fm-atunwadigital.streamguys1.com/3fm",
           "hls": false,
           "cors": true,
-          "content_type": "audio/mpeg",
-          "bitrate_kbps": 128
+          "content_type": "audio/aacp",
+          "bitrate_kbps": 96
         }
       ]
     },
@@ -51,6 +51,23 @@
           "cors": true,
           "content_type": "audio/mpeg",
           "bitrate_kbps": 128
+        }
+      ]
+    },
+    {
+      "id": "onua-fm",
+      "name": "Onua FM",
+      "frequency_mhz": 95.1,
+      "language": "tw",
+      "format": "talk, music",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://onuafm-atunwadigital.streamguys1.com/onuafm",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/aac",
+          "bitrate_kbps": 96
         }
       ]
     },
