@@ -128,17 +128,18 @@
       "language": "en",
       "format": "public radio",
       "homepage": "https://www.gbcghanaonline.com",
-      "stream": "https://173.249.50.205:8004/;",
+      "stream": "https://mediagh.us:2000/stream/uniiqfm",
       "backup_streams": [],
       "permission": "not-asked",
       "sources": [
         "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Greater_Accra_Region",
         "https://en.wikipedia.org/wiki/Uniiq_FM",
         "https://www.radiotune.fm/en-us/@gbc-uniiq-fm-95-7",
-        "https://radio.ghana-net.com/gbc-uniiq-fm-accra-95-7-fm"
+        "https://radio.ghana-net.com/gbc-uniiq-fm-accra-95-7-fm",
+        "https://www.radio-browser.info/history/f9fae8a0-17a5-4779-8172-6b276dc2ea92"
       ],
-      "verified": "unverified",
-      "note": "Weak: one directory lists this bare IP address in HTTPS on 15 Nov 2026; another lists the same address in HTTP behind a third-party relay (cast.tunzilla.com), which this catalogue must not use. HTTPS on a bare IP address is unlikely to have a valid certificate. Ask GBC for an address.",
+      "verified": "checked",
+      "note": "Weak: one directory lists this bare IP address in HTTPS on 15 Nov 2026; another lists the same address in HTTP behind a third-party relay (cast.tunzilla.com), which this catalogue must not use. HTTPS on a bare IP address is unlikely to have a valid certificate. Ask GBC for an address. Address taken from Radio Browser by the weekly refresh on 2026-11-16 and checked live over HTTPS; nobody has listened to it. It replaces https://173.249.50.205:8004/;, which no longer answered.",
       "last_test": {
         "date": "2026-11-15",
         "where": "Chrome, listening test on GitHub Pages",
