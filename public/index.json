@@ -5,25 +5,25 @@
       "country_name": "Benin",
       "city": "Cotonou",
       "path": "bj/cotonou.json",
-      "checked_at": "2026-11-17T03:25:42+00:00",
+      "checked_at": "2026-11-17T12:18:41+00:00",
       "listed": 14,
-      "published": 6
+      "published": 5
     },
     {
       "country": "GH",
       "country_name": "Ghana",
       "city": "Accra",
       "path": "gh/accra.json",
-      "checked_at": "2026-11-17T03:25:42+00:00",
+      "checked_at": "2026-11-17T12:18:41+00:00",
       "listed": 18,
-      "published": 13
+      "published": 14
     },
     {
       "country": "TG",
       "country_name": "Togo",
       "city": "Lomé",
       "path": "tg/lome.json",
-      "checked_at": "2026-11-17T03:25:42+00:00",
+      "checked_at": "2026-11-17T12:18:41+00:00",
       "listed": 13,
       "published": 4
     }
