@@ -179,3 +179,21 @@ checked_at,station,state,stream,errors
 2026-11-18T03:03:09+00:00,adom-fm,ok,https://mmg.streamguys1.com/AdomFM-mp3,
 2026-11-18T03:03:09+00:00,oman-fm,down,,URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn
 2026-11-18T03:03:09+00:00,yfm,ok,https://atunwadigital.streamguys1.com/yfm1079accra,
+2026-11-18T12:04:14+00:00,radio-gold,ok,https://radiogold-atunwadigital.streamguys1.com/radiogold,
+2026-11-18T12:04:14+00:00,class-fm,ok,https://classfm-atunwadigital.streamguys1.com/classfm,
+2026-11-18T12:04:14+00:00,3fm,ok,https://3fm-atunwadigital.streamguys1.com/3fm,
+2026-11-18T12:04:14+00:00,asempa-fm,ok,https://mmg.streamguys1.com/AsempaFM-mp3,
+2026-11-18T12:04:14+00:00,onua-fm,ok,https://onuafm-atunwadigital.streamguys1.com/onuafm,
+2026-11-18T12:04:14+00:00,gbc-uniiq-fm,down,,URLError: <urlopen error [Errno 111] Connection refused>
+2026-11-18T12:04:14+00:00,citi-fm,ok,https://citi973fm.radioca.st/stream,
+2026-11-18T12:04:14+00:00,asaase-radio,http-only,,
+2026-11-18T12:04:14+00:00,joy-fm,ok,https://mmg.streamguys1.com/JoyFM-mp3,
+2026-11-18T12:04:14+00:00,accra-fm,ok,https://accrafm-atunwadigital.streamguys1.com/accrafm,
+2026-11-18T12:04:14+00:00,okay-fm,down,,URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn
+2026-11-18T12:04:14+00:00,angel-fm,ok,https://angelfmaccra-atunwadigital.streamguys1.com/angelfmaccra,
+2026-11-18T12:04:14+00:00,starr-fm,ok,https://starrfm-atunwadigital.streamguys1.com/starrfm,
+2026-11-18T12:04:14+00:00,hitz-fm,ok,https://mmg.streamguys1.com/HitzFM-mp3,
+2026-11-18T12:04:14+00:00,peace-fm,ok,https://peacefm-atunwadigital.streamguys1.com/peacefm,
+2026-11-18T12:04:14+00:00,adom-fm,ok,https://mmg.streamguys1.com/AdomFM-mp3,
+2026-11-18T12:04:14+00:00,oman-fm,down,,URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostn
+2026-11-18T12:04:14+00:00,yfm,ok,https://atunwadigital.streamguys1.com/yfm1079accra,
