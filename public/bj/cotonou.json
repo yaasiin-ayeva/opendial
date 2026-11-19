@@ -1,7 +1,7 @@
 {
   "country": "BJ",
   "city": "Cotonou",
-  "checked_at": "2026-11-19T02:17:41+00:00",
+  "checked_at": "2026-11-19T10:37:26+00:00",
   "stations": [
     {
       "id": "radio-sogema",
@@ -92,6 +92,23 @@
           "cors": true,
           "content_type": "audio/mpeg",
           "bitrate_kbps": 32
+        }
+      ]
+    },
+    {
+      "id": "radio-tokpa",
+      "name": "Radio Tokpa",
+      "frequency_mhz": 104.3,
+      "language": "fr",
+      "format": "news, talk, entertainment",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://radiotokpa.info/liveradio",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 64
         }
       ]
     }
