@@ -1,7 +1,7 @@
 {
   "country": "GH",
   "city": "Accra",
-  "checked_at": "2026-11-20T17:34:08+00:00",
+  "checked_at": "2026-11-20T23:42:34+00:00",
   "stations": [
     {
       "id": "radio-gold",
@@ -17,23 +17,6 @@
           "cors": true,
           "content_type": "audio/mpeg",
           "bitrate_kbps": 48
-        }
-      ]
-    },
-    {
-      "id": "class-fm",
-      "name": "Class FM",
-      "frequency_mhz": 91.3,
-      "language": "en",
-      "format": "news, talk, music",
-      "permission": "not-asked",
-      "streams": [
-        {
-          "url": "https://classfm-atunwadigital.streamguys1.com/classfm",
-          "hls": false,
-          "cors": true,
-          "content_type": "audio/mpeg",
-          "bitrate_kbps": 128
         }
       ]
     },
@@ -190,23 +173,6 @@
       "streams": [
         {
           "url": "https://mmg.streamguys1.com/HitzFM-mp3",
-          "hls": false,
-          "cors": true,
-          "content_type": "audio/mpeg",
-          "bitrate_kbps": 128
-        }
-      ]
-    },
-    {
-      "id": "peace-fm",
-      "name": "Peace FM",
-      "frequency_mhz": 104.3,
-      "language": "tw",
-      "format": "news, talk",
-      "permission": "not-asked",
-      "streams": [
-        {
-          "url": "https://peacefm-atunwadigital.streamguys1.com/peacefm",
           "hls": false,
           "cors": true,
           "content_type": "audio/mpeg",
