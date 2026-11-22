@@ -1,7 +1,7 @@
 {
   "country": "GH",
   "city": "Accra",
-  "checked_at": "2026-11-22T15:56:11+00:00",
+  "checked_at": "2026-11-22T21:36:22+00:00",
   "stations": [
     {
       "id": "radio-gold",
@@ -173,6 +173,23 @@
       "streams": [
         {
           "url": "https://mmg.streamguys1.com/HitzFM-mp3",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 128
+        }
+      ]
+    },
+    {
+      "id": "peace-fm",
+      "name": "Peace FM",
+      "frequency_mhz": 104.3,
+      "language": "tw",
+      "format": "news, talk",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://peacefm-atunwadigital.streamguys1.com/peacefm",
           "hls": false,
           "cors": true,
           "content_type": "audio/mpeg",
