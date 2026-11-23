@@ -1,7 +1,7 @@
 {
   "country": "GH",
   "city": "Accra",
-  "checked_at": "2026-11-23T02:16:13+00:00",
+  "checked_at": "2026-11-23T11:02:04+00:00",
   "stations": [
     {
       "id": "radio-gold",
@@ -66,7 +66,7 @@
           "url": "https://onuafm-atunwadigital.streamguys1.com/onuafm",
           "hls": false,
           "cors": true,
-          "content_type": "audio/aacp",
+          "content_type": "audio/aac",
           "bitrate_kbps": 96
         }
       ]
