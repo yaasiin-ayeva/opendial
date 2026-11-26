@@ -1,7 +1,7 @@
 {
   "country": "TG",
   "city": "Lomé",
-  "checked_at": "2026-11-26T03:57:20+00:00",
+  "checked_at": "2026-11-26T13:41:32+00:00",
   "stations": [
     {
       "id": "sport-fm",
@@ -17,6 +17,23 @@
           "cors": true,
           "content_type": "audio/mpeg",
           "bitrate_kbps": 128
+        }
+      ]
+    },
+    {
+      "id": "kanal-fm",
+      "name": "Kanal FM",
+      "frequency_mhz": 93.5,
+      "language": "fr",
+      "format": "news, talk",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://radio.kanalfm.com/KANALFM",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/mpeg",
+          "bitrate_kbps": 96
         }
       ]
     },
