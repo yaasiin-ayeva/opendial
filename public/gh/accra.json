@@ -1,7 +1,7 @@
 {
   "country": "GH",
   "city": "Accra",
-  "checked_at": "2026-11-26T22:49:05+00:00",
+  "checked_at": "2026-11-27T04:48:11+00:00",
   "stations": [
     {
       "id": "radio-gold",
@@ -38,6 +38,23 @@
       ]
     },
     {
+      "id": "3fm",
+      "name": "3FM",
+      "frequency_mhz": 92.7,
+      "language": "en",
+      "format": "news, talk, music",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://3fm-atunwadigital.streamguys1.com/3fm",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/aacp",
+          "bitrate_kbps": 96
+        }
+      ]
+    },
+    {
       "id": "asempa-fm",
       "name": "Asempa FM",
       "frequency_mhz": 94.7,
@@ -51,6 +68,23 @@
           "cors": true,
           "content_type": "audio/mpeg",
           "bitrate_kbps": 128
+        }
+      ]
+    },
+    {
+      "id": "onua-fm",
+      "name": "Onua FM",
+      "frequency_mhz": 95.1,
+      "language": "tw",
+      "format": "talk, music",
+      "permission": "not-asked",
+      "streams": [
+        {
+          "url": "https://onuafm-atunwadigital.streamguys1.com/onuafm",
+          "hls": false,
+          "cors": true,
+          "content_type": "audio/aacp",
+          "bitrate_kbps": 96
         }
       ]
     },

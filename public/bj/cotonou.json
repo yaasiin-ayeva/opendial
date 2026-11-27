@@ -1,7 +1,7 @@
 {
   "country": "BJ",
   "city": "Cotonou",
-  "checked_at": "2026-11-26T22:49:05+00:00",
+  "checked_at": "2026-11-27T04:48:11+00:00",
   "stations": [
     {
       "id": "radio-sogema",
@@ -58,40 +58,6 @@
           "cors": true,
           "content_type": "audio/mpeg",
           "bitrate_kbps": 128
-        }
-      ]
-    },
-    {
-      "id": "frissons-radio",
-      "name": "Frissons Radio",
-      "frequency_mhz": 95.2,
-      "language": "fr",
-      "format": "news, pop, variety",
-      "permission": "not-asked",
-      "streams": [
-        {
-          "url": "https://frissonsradio.ice.infomaniak.ch/frissonsradio-128.mp3",
-          "hls": false,
-          "cors": true,
-          "content_type": "audio/mpeg",
-          "bitrate_kbps": 128
-        }
-      ]
-    },
-    {
-      "id": "radio-immaculee-conception",
-      "name": "Radio Immaculée Conception",
-      "frequency_mhz": 101.0,
-      "language": "fr",
-      "format": "catholic, religious",
-      "permission": "not-asked",
-      "streams": [
-        {
-          "url": "https://s1.reliastream.com/proxy/fratel12?mp=/stream",
-          "hls": false,
-          "cors": true,
-          "content_type": "audio/mpeg",
-          "bitrate_kbps": 32
         }
       ]
     },
